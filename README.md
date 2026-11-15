@@ -102,4 +102,11 @@ GitHubの「Settings → Repository name」で変更します。古いURLは開�
 
 ---
 
+## 6. 参考サイト
+
+- Claude Codeで作ったアプリを"無料で公開"する方法——GitHub Pages完全ガイド　　https://note.com/good_clover8830/n/nf6019ef3f009?shem=aimgspe,
+
+---
+
+
 戦略メーカー Ver.1 ／ 2026年11月
