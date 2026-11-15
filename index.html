@@ -94,13 +94,17 @@ summary h2{display:inline}
 .paper *{box-sizing:border-box}
 .ph{display:flex;justify-content:space-between;align-items:flex-end;gap:20px}
 .pk{font-size:12px;color:#5A6577;letter-spacing:.08em}
-.pt{font-size:calc(30px*var(--f-head,1));font-weight:700;line-height:1.3;margin:0;color:#1B2230}
+.pt{font-size:calc(40px*var(--f-head,1));font-weight:700;line-height:1.3;margin:0;color:#1B2230}
 .pm{display:flex;gap:8px}
 .pm div{border:1px solid #CBD2DC;border-radius:6px;padding:4px 12px;min-width:110px}
 .pm small{display:block;font-size:10px;color:#5A6577}
 .pm span{font-size:14px;font-weight:700}
-.aim{background:#F3F5F8;border-left:5px solid #1B2230;padding:8px 14px;font-size:calc(14px*var(--f-head,1));white-space:pre-wrap;overflow-wrap:anywhere}
-.aim small{font-size:11px;color:#5A6577;display:block}
+.aim{background:#F3F5F8;border-left:5px solid #1B2230;padding:10px 16px;font-weight:700;line-height:1.4;font-size:calc(22px*var(--f-head,1));white-space:pre-wrap;overflow-wrap:anywhere}
+.foot2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.foot2.one{grid-template-columns:1fr}
+.fb2{border:1.5px solid #1B2230;border-radius:8px;overflow:hidden;background:#fff}
+.fb2 h3{margin:0;padding:5px 12px;background:#1B2230;color:#fff;font-size:calc(13px*var(--f-point,1));letter-spacing:.04em}
+.fb2 ul{margin:0;padding:8px 12px 8px 28px;font-size:calc(13px*var(--f-point,1));line-height:1.55;color:#1B2230}.fb2 li{overflow-wrap:anywhere}.fb2 li+li{margin-top:2px}
+.aim small{font-size:13px;font-weight:700;margin-bottom:2px;color:#5A6577;display:block}
 .flow{position:relative;width:1059px}
 .ln{position:absolute;top:0;border-radius:10px}
 .lh{position:absolute;top:0;height:30px;border-radius:10px 10px 0 0;font-weight:700;font-size:14px;padding:3px 12px;display:flex;align-items:center;gap:10px}
@@ -151,7 +155,7 @@ summary h2{display:inline}
 <body>
 <div class="top">
   <div class="bar">
-    <h1>作戦表メーカー</h1>
+    <h1>作戦表メーカー <span style="font-size:12px;font-weight:600;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:1px 8px;vertical-align:middle">Ver.1</span></h1>
     <span class="sp"></span>
     <button class="btn" data-act="newplan">新規</button>
     <button class="btn" data-act="sample">サンプル</button>
@@ -219,9 +223,11 @@ function samplePlan(){
     {id:'e4',from:'n2',to:'n3',label:'録画も使う',hearing:'録画は週にどのくらいしますか？\n配信と録画、どちらをよく見ますか？',talk:'録画の使い方を聞き、HDDとあわせて配信機能の便利さを見せる。'},
     {id:'e5',from:'n3',to:'n4',label:'ゲーム機あり',hearing:'ゲームは、どのくらいの頻度で遊びますか？',talk:'配信より先にゲーム機の機種を聞き、FLAGの低遅延へつなぐ。'}
    ],
-   notes:'・土曜の午前は混むので、まずSTDで声かけを優先する。\n・FLAGの値引きは店長承認。\n・延長保証5年を必ず一言添える。',updated:0};
+   notes:'・土曜の午前は混むので、まずSTDで声かけを優先する。\n・FLAGの値引きは店長承認。\n・延長保証5年を必ず一言添える。',
+   acc:'・HDMIケーブルを必ず提案する\n・壁掛け金具・テレビ台は設置場所を聞いてから\n・リモコン用の電池をサービスで付ける',
+   s4:'・設置まで含めて金額を伝える\n・下取り・リサイクル回収の有無を確認する\n・購入後の使い方レクチャーを案内する',updated:0};
 }
-function blankPlan(){return {id:uid('p'),title:'',period:'',store:'',author:'',aim:'',nodes:[],edges:[],notes:'',updated:0}}
+function blankPlan(){return {id:uid('p'),title:'',period:'',store:'',author:'',aim:'',nodes:[],edges:[],notes:'',acc:'',s4:'',accT:'付帯品',s4T:'S4',updated:0}}
 
 /* ---------- layout and sheet ---------- */
 var mz=null;
@@ -336,6 +342,8 @@ function talkCards(p){
   return cards;
 }
 function tierCols(p){return TIERS.filter(function(t){return p.nodes.some(function(n){return n.tier===t.id})}).map(function(t){return t.id})}
+function bullets(t){return String(t||'').split(/\n/).map(function(x){return x.replace(/^\s*[・･•\-\*]\s*/,'').trim()}).filter(Boolean)}
+function fbox(title,t){var b=bullets(t);return b.length?'<div class="fb2"><h3>'+esc(title)+'</h3><ul>'+b.map(function(x){return '<li>'+esc(x)+'</li>'}).join('')+'</ul></div>':''}
 function pageOne(p){
   var d=new Date().toLocaleDateString('ja-JP'),cards=talkCards(p),first=cards.slice(0,6);
   var band=(p.aim?'<div class="aim"><small>今週の狙い</small>'+esc(p.aim)+'</div>':'')+(p.notes?'<div class="aim" style="border-left-color:#E0A100"><small>注意点・共有事項</small>'+esc(p.notes)+'</div>':'');
@@ -345,6 +353,7 @@ function pageOne(p){
    (nb?'<div class="band'+(nb===1?' one':'')+'">'+band+'</div>':'')+
    sheetFlow(p)+
    (first.length?'<div><h2 class="h2p" style="margin-bottom:10px">コンサルトーク <small style="font-size:12px;font-weight:500;color:#5A6577">矢印の番号に対応します。破線は途中の段を飛ばす流れです。</small></h2><div class="tgrid">'+first.join('')+'</div></div>':'')+
+   (function(){var a=fbox(p.accT||'付帯品',p.acc),b=fbox(p.s4T||'S4',p.s4),n=(a?1:0)+(b?1:0);return n?'<div class="foot2'+(n===1?' one':'')+'">'+a+b+'</div>':''})()+
    '<div class="pf">出力日 '+d+'</div></div>';
 }
 function flowPages(p){
@@ -416,7 +425,9 @@ function renderEditor(){
   '<section class="card"><h2>コンサルの流れ</h2><p class="hint">矢印1本が、お客様の反応から次の機種へ進む1つの流れです。</p>'+
    (p.edges.length?p.edges.map(edgeCard).join(''):'<p class="hint">機種を2つ以上追加すると、流れをつなげます。</p>')+
    '<div class="row"><button class="btn" data-act="eadd"'+(p.nodes.length<2?' disabled':'')+'>＋ 流れを追加</button></div></section>'+
-  '<section class="card"><h2>注意点・共有事項</h2><textarea rows="4" data-k="notes">'+esc(p.notes)+'</textarea></section>'+designCard();
+  '<section class="card"><h2>注意点・共有事項</h2><textarea rows="4" data-k="notes">'+esc(p.notes)+'</textarea></section>'+
+  '<section class="card"><h2>付帯品（コンサルトーク下部・左）</h2><div class="form"><label class="wide">見出し<input '+d('accT',p.accT||'付帯品')+'></label><label class="wide">注力すること（1行に1項目）<textarea rows="4" data-k="acc">'+esc(p.acc)+'</textarea></label></div></section>'+
+  '<section class="card"><h2>S4（コンサルトーク下部・右）</h2><div class="form"><label class="wide">見出し<input '+d('s4T',p.s4T||'S4')+'></label><label class="wide">注力すること（1行に1項目）<textarea rows="4" data-k="s4">'+esc(p.s4)+'</textarea></label></div></section>'+designCard();
 }
 var PRESETS=[['標準',{STD:'#E0A100',MID:'#2F6FDB',FLAG:'#D62839'}],['落ち着いた色',{STD:'#B68A2E',MID:'#3C6E8F',FLAG:'#A8473F'}],['白黒印刷向け',{STD:'#8A9099',MID:'#565C66',FLAG:'#1B2230'}]];
 var TROWS=[['maker','メーカー'],['model','型番'],['price','価格'],['feat','特徴'],['point','この機種で伝えること'],['label','矢印のきっかけ・流れの見出し'],['hear','ヒアリング'],['talk','コンサルのしかた'],['head','タイトル・狙い・注意点']];
