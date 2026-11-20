@@ -48,8 +48,11 @@ label{display:flex;flex-direction:column;gap:3px;font-size:12px;color:var(--mute
 @media (max-width:520px){.dpick{grid-template-columns:repeat(3,1fr)}}
 .tnbox{border:1px dashed var(--line);border-radius:8px;padding:6px 10px;margin:6px 0}
 .tnbox summary{cursor:pointer;font-size:13px;font-weight:600}
-.tnrow{display:grid;grid-template-columns:auto 1fr 1.4fr;gap:8px;align-items:end;margin:6px 0}
-@media (max-width:520px){.tnrow{grid-template-columns:1fr 1fr}.tnrow .chip{grid-column:1/-1;justify-self:start}}
+.tnrow{display:grid;grid-template-columns:auto 1fr 1.4fr auto;gap:8px;align-items:end;margin:6px 0}
+.tnrow input[type=color]{width:40px;height:36px}
+.tnb{display:flex;gap:6px;align-items:flex-end}
+.tnb .ord select{padding:6px 8px}
+@media (max-width:520px){.tnrow{grid-template-columns:auto 1fr}.tnrow label:nth-of-type(2),.tnb{grid-column:1/-1}}
 .shov{position:fixed;inset:0;background:rgba(10,15,25,.55);display:flex;align-items:center;justify-content:center;padding:16px;z-index:50}
 .shov[hidden]{display:none}
 .shbox{background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:14px;max-width:560px;width:100%;max-height:92vh;overflow:auto;padding:18px 20px;box-shadow:0 10px 40px rgba(0,0,0,.35)}
@@ -113,7 +116,7 @@ summary h2{display:inline}
 .paper{position:relative;z-index:0;overflow:hidden}
 .paper.hasd{background:var(--dt);box-shadow:inset 14px 0 0 var(--dc);padding-left:42px}
 .dband{margin:-28px -32px 0 -42px;padding:12px 32px 12px 42px;background:var(--dc);color:var(--don,#fff);display:flex;align-items:center;gap:14px;border-bottom:5px solid var(--dd);background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.10) 0 14px,rgba(255,255,255,0) 14px 28px)}
-.dbi{display:flex;width:50px;height:50px;border-radius:12px;background:rgba(255,255,255,.18);align-items:center;justify-content:center;flex:none}
+.dbi{display:flex;width:50px;height:50px;border-radius:12px;background:rgba(255,255,255,.18);align-items:center;justify-content:center;flex:none;text-shadow:none}
 .dbn{font-size:34px;font-weight:700;letter-spacing:.06em;line-height:1.1}
 .dbn small{font-size:15px;font-weight:500;margin-left:8px;letter-spacing:.1em}
 .dbs{margin-left:auto;font-size:15px;font-weight:700;letter-spacing:.12em;border:2px solid currentColor;border-radius:99px;padding:3px 16px}
@@ -134,7 +137,9 @@ summary h2{display:inline}
 .flow{position:relative;width:1059px}
 .ln{position:absolute;top:0;border-radius:10px}
 .lh{position:absolute;top:0;height:30px;border-radius:10px 10px 0 0;font-weight:700;font-size:14px;padding:3px 12px;display:flex;align-items:center;gap:10px}
-.lh small{font-weight:500;font-size:12px}
+.eb{position:absolute;width:22px;height:22px;border-radius:50%;border:2px solid #fff;box-sizing:border-box;font-size:12px;font-weight:800;line-height:18px;text-align:center;box-shadow:0 0 0 1px rgba(0,0,0,.25)}
+.tblk{position:absolute;border:2px solid;border-radius:10px}.tstrip{position:absolute;height:24px;border-radius:8px 8px 0 0;font-size:13px;font-weight:700;padding:0 10px;line-height:24px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.tstrip small{font-weight:500;margin-left:6px;opacity:.9}
+.lh{white-space:nowrap;overflow:hidden}.lh small{font-weight:500;font-size:12px;overflow:hidden;text-overflow:ellipsis}
 .flow svg{position:absolute;left:0;top:0}
 .nd{position:absolute;border:2px solid;border-radius:10px;background:#fff;overflow:hidden;display:flex;flex-direction:column}
 .nh{display:flex;align-items:baseline;gap:8px;padding:4px 12px;font-weight:700;font-size:16px;line-height:22px}
@@ -150,8 +155,8 @@ summary h2{display:inline}
 .pt2{font-size:calc(13px*var(--f-point,1));line-height:1.5;background:#F3F5F8;border-radius:6px;padding:6px 10px;overflow-wrap:anywhere;white-space:pre-wrap}
 .pt2 small{display:block;font-size:11px;color:#5A6577;font-weight:700}
 .pho{flex:none;width:var(--pw,88px);height:var(--ph,62px);border:1px solid #D6DBE3;border-radius:6px;background:#F3F5F8 center/contain no-repeat}
-.pill{position:absolute;display:flex;align-items:center;gap:6px;border:2px solid;border-radius:14px;background:#fff;padding:4px 8px 4px 5px;font-size:calc(13px*var(--f-label,1));line-height:calc(17px*var(--f-label,1));font-weight:500;color:#1B2230;overflow-wrap:anywhere;word-break:break-all}
-.pill i{font-style:normal;width:var(--pb,28px);height:var(--pb,28px);border-radius:99px;color:#fff;font-size:calc(var(--pb,28px)*.58);font-weight:700;display:flex;align-items:center;justify-content:center;flex:none}
+.pill{position:absolute;display:flex;align-items:center;gap:6px;box-sizing:border-box;border:1px solid;border-radius:5px;background:rgba(255,255,255,.94);padding:0 6px 0 3px;white-space:normal;font-size:calc(13px*var(--f-label,1));line-height:calc(17px*var(--f-label,1));font-weight:700;color:#1B2230;overflow-wrap:anywhere;word-break:break-all}
+.pill.inl{white-space:nowrap;word-break:keep-all;overflow-wrap:normal}.pill i{font-style:normal;width:var(--pb,28px);height:var(--pb,28px);border-radius:99px;color:#fff;font-size:calc(var(--pb,28px)*.58);font-weight:700;display:flex;align-items:center;justify-content:center;flex:none;text-shadow:none}
 .empty{position:absolute;left:0;right:0;top:40px;text-align:center;color:#5A6577;font-size:15px}
 .pf{font-size:11px;color:#5A6577;margin-top:auto}
 .h2p{font-size:18px;font-weight:700;margin:0;border-bottom:2px solid var(--dd,#1B2230);padding-bottom:4px}
@@ -181,7 +186,7 @@ summary h2{display:inline}
 <body>
 <div class="top">
   <div class="bar">
-    <h1>戦略メーカー <span style="font-size:12px;font-weight:600;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:1px 8px;vertical-align:middle">Ver.1</span></h1>
+    <h1>戦略メーカー <button type="button" data-act="ver" id="verbtn" title="更新履歴を見る" style="font:inherit;font-size:12px;font-weight:600;color:var(--muted);background:none;border:1px solid var(--line);border-radius:999px;padding:1px 8px;vertical-align:middle;cursor:pointer">Ver.2.4</button></h1>
     <span class="sp"></span>
     <button class="btn" data-act="newplan">新規</button>
     <button class="btn" data-act="sample">サンプル</button>
@@ -216,8 +221,20 @@ var st={cur:null,pane:'edit',dirty:false,status:'local',canWrite:null,msg:'',err
 function $(s){return document.querySelector(s)}
 function esc(t){return String(t==null?'':t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
 function uid(p){return p+Math.random().toString(36).slice(2,8)}
-function tnOf(id,p){var t=((p||st.cur).tn||{})[id]||{},b=TIERS.filter(function(x){return x.id===id})[0]||TIERS[0];
-  return {name:(typeof t.n==='string'&&t.n.trim())?t.n.trim().slice(0,10):b.id,sub:typeof t.s==='string'?t.s.slice(0,20):b.sub}}
+var PAL=['#0E9F6E','#8B5CF6','#EA580C','#0891B2','#DB2777','#65A30D'],MAXT=6;
+function tierList(p){p=p||st.cur;
+  var raw=(Array.isArray(p.tiers)&&p.tiers.length)?p.tiers:TIERS.map(function(b){var t=(p.tn||{})[b.id]||{};return {id:b.id,n:(typeof t.n==='string'&&t.n.trim())?t.n.trim().slice(0,10):b.id,s:typeof t.s==='string'?t.s.slice(0,20):b.sub}});
+  return raw.map(function(t,i){return Object.assign({},t,{o:(typeof t.o==='number'&&t.o>=1)?Math.round(t.o):i+1,_i:i})}).sort(function(x,y){return x.o-y.o||x._i-y._i})}
+function ensureTiers(p){if(!Array.isArray(p.tiers)||!p.tiers.length){p.tiers=tierList(p).map(function(t){var c=Object.assign({},t);delete c._i;return c});delete p.tn}else p.tiers.forEach(function(t,i){if(typeof t.o!=='number')t.o=i+1});return p.tiers}
+function ranksOf(p){var r=[];tierList(p).forEach(function(t){if(r.indexOf(t.o)<0)r.push(t.o)});return r.sort(function(a,b){return a-b})}
+function tierO(id,p){var L=tierList(p),b=L.filter(function(t){return t.id===id})[0]||L[0];return b.o}
+function stepOf(a,b,p){var R=ranksOf(p);return R.length>1&&tierO(a,p)===R[0]&&tierO(b,p)===R[1]}
+/* 同じ「順番」の段は同じ列にまとまり、機種は上から順に並ぶ */
+function colsOf(p){p=p||st.cur;var cols=[];
+  tierList(p).filter(function(t){return p.nodes.some(function(n){return n.tier===t.id})}).forEach(function(t){var c=cols[cols.length-1],u=tier(t.id,p);if(c&&c.o===t.o)c.tiers.push(u);else cols.push({o:t.o,tiers:[u]})});
+  return cols.map(function(c){var f=c.tiers[0];return {id:f.id,name:c.tiers.map(function(x){return x.name}).join(' / '),sub:c.tiers.length>1?'':f.sub,color:f.color,text:f.text,tint:f.tint,tiers:c.tiers}})}
+function tierColIdx(p){var m={};colsOf(p).forEach(function(c,i){c.tiers.forEach(function(t){m[t.id]=i})});return m}
+function tnOf(id,p){var L=tierList(p),b=L.filter(function(x){return x.id===id})[0]||L[0];return {name:b.n,sub:b.s}}
 var DEPTS=[
  {id:'sav',name:'季節AV',c:'#0A7C8C',d:'#055461',t:'#EAF6F8',
   ic:'<circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M18.7 5.3l-2.1 2.1M7.4 16.6l-2.1 2.1"/>'},
@@ -238,9 +255,10 @@ function dz(p){var d=(p&&p.design)||{},c=d.c||{};
   return {t:tsOf(d),num:d.num||'m',photo:d.photo||'m',paper:d.paper==='a3'?'a3':'a4',orient:d.orient||'auto',res:({std:1,hi:1,max:1})[d.res]?d.res:'hi',price:okHex(d.price,'#B0102A'),
     c:{STD:okHex(c.STD,DEFC.STD),MID:okHex(c.MID,DEFC.MID),FLAG:okHex(c.FLAG,DEFC.FLAG)}}}
 function rgbOf(h){return [parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)]}
+function mixHex(a,b,f){var x=rgbOf(a),y=rgbOf(b);return '#'+x.map(function(v,i){return ('0'+Math.round(v+(y[i]-v)*f).toString(16)).slice(-2)}).join('')}
 function textOn(h){var c=rgbOf(h).map(function(v){v/=255;return v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4)}),L=.2126*c[0]+.7152*c[1]+.0722*c[2];return L>.4?'#1B2230':'#FFFFFF'}
 function tintOf(h){var c=rgbOf(h).map(function(v){return Math.round(v+(255-v)*.88)});return 'rgb('+c.join(',')+')'}
-function tier(id){var b=TIERS.filter(function(t){return t.id===id})[0]||TIERS[0],c=dz(st.cur).c[b.id];var n=tnOf(b.id);return {id:b.id,name:n.name,sub:n.sub,color:c,text:textOn(c),tint:tintOf(c)}}
+function tier(id,p){p=p||st.cur;var L=tierList(p),b=L.filter(function(t){return t.id===id})[0]||L[0],c=okHex(b.color,'')||dz(p).c[b.id]||'#64748B';return {id:b.id,name:b.n,sub:b.s,color:c,text:textOn(c),tint:tintOf(c)}}
 var FSM={s:.85,m:1,l:1.2};
 function dzSizes(p){var D=dz(p||st.cur),t={};TKEYS.forEach(function(k){t[k]=FSM[D.t[k]]});
   return {t:t,pb:{s:22,m:28,l:36}[D.num]||28,cn:{s:28,m:36,l:46}[D.num]||36,pw:{s:66,m:88,l:120}[D.photo]||88,ph:{s:46,m:62,l:84}[D.photo]||62}}
@@ -299,40 +317,127 @@ function measureNode(nd,w){
   }catch(e){return 200}
 }
 function layout(p){
-  var cols=TIERS.filter(function(t){return p.nodes.some(function(n){return n.tier===t.id})}).map(function(t){return tier(t.id)}),n=cols.length||1,pad=14,inner=1059-2*pad;
-  var nodeW=n===1?420:n===2?330:236,G=n>1?(inner-n*nodeW)/(n-1):0,TOP=44,GAP=22,map={},bottom=TOP;
-  cols.forEach(function(t,ci){
+  var cols=colsOf(p),n=cols.length||1,pad=14,inner=1059-2*pad;
+  var nodeW=n===1?420:n===2?330:n===3?236:Math.max(84,Math.floor((inner-(n-1)*(n===4?110:n===5?100:90))/n)),G=n>1?(inner-n*nodeW)/(n-1):0,TOP=56,GAP=40,SY=24,map={},strips=[],blocks=[],bottom=TOP;
+  cols.forEach(function(c,ci){
     var x=n===1?(1059-nodeW)/2:pad+ci*(nodeW+G),y=TOP;
-    p.nodes.filter(function(q){return q.tier===t.id}).forEach(function(nd){
-      var h=measureNode(nd,nodeW);map[nd.id]={nd:nd,ci:ci,x:x,y:y,w:nodeW,h:h};y+=h+GAP});
+    c.tiers.forEach(function(t){
+      var grp=p.nodes.filter(function(q){return q.tier===t.id});if(!grp.length)return;
+      var y0=y;
+      if(c.tiers.length>1){strips.push({x:x-8,y:y,w:nodeW+16,h:SY,t:t});y+=SY+8}
+      grp.forEach(function(nd){var h=measureNode(nd,nodeW);map[nd.id]={nd:nd,ci:ci,x:x,y:y,w:nodeW,h:h};y+=h+GAP});
+      if(c.tiers.length>1){y=y-GAP+10;blocks.push({x:x-8,y:y0,w:nodeW+16,h:y-y0,t:t});y+=GAP-6}});
     bottom=Math.max(bottom,y-GAP);
   });
-  return {cols:cols,n:n,nodeW:nodeW,G:G,map:map,flowH:bottom+16};
+  return {cols:cols,n:n,nodeW:nodeW,G:G,map:map,strips:strips,blocks:blocks,flowH:bottom+40};
 }
-function cub(a,b,c,d,t){var u=1-t;return u*u*u*a+3*u*u*t*b+3*u*t*t*c+t*t*t*d}
-function yAtX(q,x){var best=0,bd=1e9;for(var i=0;i<=80;i++){var t=i/80,d=Math.abs(cub(q[0],q[2],q[4],q[6],t)-x);if(d<bd){bd=d;best=t}}return cub(q[1],q[3],q[5],q[7],best)}
+
+/* ---- 矢印の経路: 段の間の通路を縦に、機種の外側の通路を横に通す直角ルート。カードの裏には回りません ---- */
+function dedupePts(pts){var o=[];pts.forEach(function(q){var l=o[o.length-1];if(!l||Math.abs(l[0]-q[0])>.01||Math.abs(l[1]-q[1])>.01)o.push(q)});
+  var r=[];o.forEach(function(q,i){var a=r[r.length-2],b=r[r.length-1];if(a&&b&&((Math.abs(a[0]-b[0])<.01&&Math.abs(b[0]-q[0])<.01)||(Math.abs(a[1]-b[1])<.01&&Math.abs(b[1]-q[1])<.01)))r[r.length-1]=q;else r.push(q)});return r}
+function roundPath(pts,r){var d='M'+pts[0][0]+' '+pts[0][1];
+  for(var i=1;i<pts.length-1;i++){var a=pts[i-1],b=pts[i],c=pts[i+1],l1=Math.hypot(b[0]-a[0],b[1]-a[1]),l2=Math.hypot(c[0]-b[0],c[1]-b[1]),rr=Math.min(r,l1/2,l2/2);
+    d+=' L'+(b[0]+(a[0]-b[0])/l1*rr)+' '+(b[1]+(a[1]-b[1])/l1*rr)+' Q'+b[0]+' '+b[1]+' '+(b[0]+(c[0]-b[0])/l2*rr)+' '+(b[1]+(c[1]-b[1])/l2*rr)}
+  var e=pts[pts.length-1];return d+' L'+e[0]+' '+e[1]}
+/* ====================================================================
+   自動レイアウト（矢印の経路探索）
+   1) 機種の出入口（ポート）を行き先の高さ順に割り当てる
+   2) 6px格子の上で A* 探索し、機種を避けて直角に進む
+      ・他の矢印とは 12px 以上離す（平行して重ならない）
+      ・どうしても交わるときは「十字に横切る」だけ（高いコスト）
+      ・曲がりは少なく、近い矢印から先に引く
+   3) 出発・到着の手前は必ずまっすぐ（番号バッジと矢じりの置き場）
+   ==================================================================== */
+var RT={P:6,SA:18,SB:36,BEND:10,CROSS:30};
+function MinHeap(){this.a=[]}
+MinHeap.prototype.push=function(k,v){var a=this.a,i=a.length;a.push([k,v]);while(i>0){var p=(i-1)>>1;if(a[p][0]<=a[i][0])break;var t=a[p];a[p]=a[i];a[i]=t;i=p}};
+MinHeap.prototype.pop=function(){var a=this.a,top=a[0],last=a.pop();if(a.length){a[0]=last;var i=0,n=a.length;for(;;){var l=2*i+1,r=l+1,m=i;if(l<n&&a[l][0]<a[m][0])m=l;if(r<n&&a[r][0]<a[m][0])m=r;if(m===i)break;var t=a[m];a[m]=a[i];a[i]=t;i=m}}return top};
+MinHeap.prototype.size=function(){return this.a.length};
 function edgeGeoms(p,L){
-  var list=[],cnt={},tot={};
+  var P=RT.P,W=1059,H=Math.ceil(L.flowH),NC=Math.ceil(W/P)+1,NR=Math.ceil(H/P)+1,list=[],n=L.n;
   p.edges.forEach(function(e,i){
     var a=L.map[e.from],b=L.map[e.to];if(!a||!b||a===b)return;
-    var dir=b.ci>a.ci?1:(b.ci<a.ci?-1:0);
-    list.push({e:e,i:i,a:a,b:b,dir:dir,sa:dir>=0?'R':'L',sb:dir>0?'L':'R',skip:Math.abs(b.ci-a.ci)>1});
+    var d=b.ci-a.ci;list.push({e:e,i:i,a:a,b:b,dir:d>0?1:(d<0?-1:0),skip:Math.abs(d)>1});
   });
-  list.forEach(function(g){var ka=g.a.nd.id+g.sa,kb=g.b.nd.id+g.sb;tot[ka]=(tot[ka]||0)+1;tot[kb]=(tot[kb]||0)+1});
+  /* --- 1) ポート --- */
   list.forEach(function(g){
-    var ka=g.a.nd.id+g.sa,kb=g.b.nd.id+g.sb;
-    var ia=(cnt[ka]=(cnt[ka]===undefined?0:cnt[ka]+1)),ib=(cnt[kb]=(cnt[kb]===undefined?0:cnt[kb]+1));
-    var oa=(ia-(tot[ka]-1)/2)*16,ob=(ib-(tot[kb]-1)/2)*16;
-    var x1=g.sa==='R'?g.a.x+g.a.w:g.a.x,y1=g.a.y+g.a.h/2+oa;
-    var x2=g.sb==='R'?g.b.x+g.b.w:g.b.x,y2=g.b.y+g.b.h/2+ob;
-    var c1x,c2x,dx;
-    if(g.dir>0){dx=Math.max(40,(x2-x1)*.5);c1x=x1+dx;c2x=x2-dx}
-    else if(g.dir<0){dx=Math.max(40,(x1-x2)*.5);c1x=x1-dx;c2x=x2+dx}
-    else{c1x=x1+70;c2x=x2+70}
-    g.p=[x1,y1,c1x,y1,c2x,y2,x2,y2];
-    g.my=cub(y1,y1,y2,y2,.5);
-    g.lx=g.dir>0?g.a.x+g.a.w+L.G/2:(g.dir<0?g.a.x-L.G/2:x1+60);
-    g.ly=g.dir===0?g.my:yAtX(g.p,g.lx);
+    if(g.dir===0){g.sa=g.sb=(n===1||g.a.ci<n-1)?'R':'L'}else{g.sa=g.dir>0?'R':'L';g.sb=g.dir>0?'L':'R'}
+  });
+  var ports={};
+  function reg(g,w){var nd=w==='a'?g.a:g.b,side=w==='a'?g.sa:g.sb,oth=w==='a'?g.b:g.a;(ports[nd.nd.id+side]=ports[nd.nd.id+side]||[]).push({g:g,w:w,oy:oth.y+oth.h/2+g.i*.001,nd:nd})}
+  list.forEach(function(g){reg(g,'a');reg(g,'b')});
+  Object.keys(ports).forEach(function(k){
+    var arr=ports[k].sort(function(x,y){return x.oy-y.oy}),c=arr.length,h=arr[0].nd.h,sp=Math.min(24,Math.max(18,Math.floor((h-40)/Math.max(1,c-1)/P)*P));
+    arr.forEach(function(q,i){q.g['y'+q.w]=Math.round((q.nd.y+h/2+(i-(c-1)/2)*(c>1?sp:0))/P)*P})});
+  list.forEach(function(g){g.x1=g.sa==='R'?g.a.x+g.a.w:g.a.x;g.x2=g.sb==='R'?g.b.x+g.b.w:g.b.x;
+    g.dxa=g.sa==='R'?1:-1;g.dxb=g.sb==='R'?1:-1;
+    g.cs=[Math.round((g.x1+g.dxa*RT.SA)/P),Math.round(g.ya/P)];g.ce=[Math.round((g.x2+g.dxb*RT.SB)/P),Math.round(g.yb/P)]});
+  /* --- 格子 --- */
+  var N=NC*NR,obs=new Uint8Array(N),bH=new Int16Array(N),bV=new Int16Array(N),uH=new Int16Array(N),uV=new Int16Array(N);
+  function ix(cx,cy){return cy*NC+cx}
+  function rectBlock(x,y,w,h,m){var x0=Math.floor((x-m)/P),x1=Math.ceil((x+w+m)/P),y0=Math.floor((y-m)/P),y1=Math.ceil((y+h+m)/P);
+    for(var cy=Math.max(0,y0);cy<=Math.min(NR-1,y1);cy++)for(var cx=Math.max(0,x0);cx<=Math.min(NC-1,x1);cx++)obs[ix(cx,cy)]=1}
+  Object.keys(L.map).forEach(function(k){var o=L.map[k];rectBlock(o.x,o.y,o.w,o.h,7)});
+  L.strips.forEach(function(q){rectBlock(q.x,q.y,q.w,q.h,5)});
+  for(var cx=0;cx<NC;cx++){for(var cy=0;cy<NR;cy++){if(cx<1||cx>NC-2||cy*P<40||cy>NR-2)obs[ix(cx,cy)]=1}}
+  function mark(arr,cx,cy,id){if(cx<0||cy<0||cx>=NC||cy>=NR)return;var k=ix(cx,cy);if(!arr[k])arr[k]=id}
+  function markH(cx,cy,id){for(var d=-2;d<=2;d++)mark(bH,cx,cy+d,id);uH[ix(cx,cy)]=id}
+  function markV(cx,cy,id){for(var d=-2;d<=2;d++)mark(bV,cx+d,cy,id);uV[ix(cx,cy)]=id}
+  /* 出発・到着の手前（まっすぐ部分）は先に確保し、他の矢印を寄せつけない */
+  function reserve(g,pt,x0,dx,y,id){var c0=Math.round(x0/P),c1=pt[0],lo=Math.min(c0,c1),hi=Math.max(c0,c1);
+    for(var ex=1;ex<=3;ex++){var xx=c1+(c1>=c0?ex:-ex);for(var dd=-2;dd<=2;dd++)mark(bH,xx,pt[1]+dd,id)}
+    for(var cx=lo;cx<=hi;cx++){markH(cx,pt[1],id);for(var dy=-2;dy<=2;dy++)for(var ddx=-2;ddx<=2;ddx++)mark(bV,cx+ddx,pt[1]+dy,id)}}
+  list.forEach(function(g,k){g.id=k+1;reserve(g,g.cs,g.x1,g.dxa,g.ya,g.id);reserve(g,g.ce,g.x2,g.dxb,g.yb,g.id)});
+  /* --- 2) A* --- */
+  var DX=[1,-1,0,0],DY=[0,0,1,-1];
+  function route(g,relax){
+    var id=g.id,S=g.cs,T=g.ce,size=N*4,dist=new Float32Array(size).fill(1e9),prev=new Int32Array(size).fill(-1),hp=new MinHeap();
+    var d0=g.dxa>0?0:1,s0=ix(S[0],S[1])*4+d0;dist[s0]=0;hp.push(Math.abs(S[0]-T[0])+Math.abs(S[1]-T[1]),s0);
+    var goal=-1;
+    while(hp.size()){
+      var cur=hp.pop(),st=cur[1],c=st>>2,d=st&3,gd=dist[st];
+      if(cur[0]-(Math.abs((c%NC)-T[0])+Math.abs(((c/NC)|0)-T[1]))>gd+.01)continue;
+      var cx=c%NC,cy=(c/NC)|0;
+      if(cx===T[0]&&cy===T[1]){goal=st;break}
+      for(var nd=0;nd<4;nd++){
+        if((nd^1)===d&&(nd>>1)===(d>>1))continue;
+        var nx=cx+DX[nd],ny=cy+DY[nd];if(nx<0||ny<0||nx>=NC||ny>=NR)continue;
+        var nc=ix(nx,ny);if(obs[nc])continue;
+        var horiz=nd<2,cost=1;
+        if(!relax){
+          var bb=horiz?bH[nc]:bV[nc];if(bb&&bb!==id)continue;
+          if(nd!==d){if((bH[c]&&bH[c]!==id)||(bV[c]&&bV[c]!==id))continue;cost+=RT.BEND}
+          var cr=horiz?uV[nc]:uH[nc];if(cr&&cr!==id)cost+=RT.CROSS;
+        }else{
+          if(nd!==d)cost+=RT.BEND;
+          var cr2=horiz?(uH[nc]&&uH[nc]!==id?200:(uV[nc]&&uV[nc]!==id?RT.CROSS:0)):(uV[nc]&&uV[nc]!==id?200:(uH[nc]&&uH[nc]!==id?RT.CROSS:0));cost+=cr2;
+        }
+        var ns=nc*4+nd,nd2=gd+cost;
+        if(nd2<dist[ns]){dist[ns]=nd2;prev[ns]=st;hp.push(nd2+Math.abs(nx-T[0])+Math.abs(ny-T[1]),ns)}
+      }
+    }
+    if(goal<0)return null;
+    var cells=[],s=goal;while(s>=0){cells.push(s>>2);s=prev[s]}cells.reverse();return cells;
+  }
+  function commit(g,cells){
+    for(var i=0;i<cells.length;i++){var cx=cells[i]%NC,cy=(cells[i]/NC)|0,px=i?cells[i-1]%NC:cx,py=i?((cells[i-1]/NC)|0):cy,nx=i<cells.length-1?cells[i+1]%NC:cx,ny=i<cells.length-1?((cells[i+1]/NC)|0):cy;
+      var hh=(px!==cx)||(nx!==cx),vv=(py!==cy)||(ny!==cy);
+      if(hh)markH(cx,cy,g.id);if(vv)markV(cx,cy,g.id)}}
+  var order=list.slice().sort(function(x,y){return (Math.abs(x.cs[0]-x.ce[0])+Math.abs(x.cs[1]-x.ce[1]))-(Math.abs(y.cs[0]-y.ce[0])+Math.abs(y.cs[1]-y.ce[1]))||x.i-y.i});
+  order.forEach(function(g){
+    var cells=route(g,false);g.relaxed=false;
+    if(!cells){cells=route(g,true);g.relaxed=true}
+    g.cells=cells;if(cells)commit(g,cells)});
+  /* --- 3) 経路の点 --- */
+  list.forEach(function(g){
+    var pts=[[g.x1,g.ya],[g.cs[0]*P,g.ya]];
+    if(g.cells){g.cells.forEach(function(c){pts.push([(c%NC)*P,((c/NC)|0)*P])})}
+    else{pts.push([g.ce[0]*P,g.ya],[g.ce[0]*P,g.yb])}
+    pts.push([g.ce[0]*P,g.yb],[g.x2,g.yb]);
+    g.pts=dedupePts(pts);g.d=roundPath(g.pts,9);
+    var m=g.pts.length,e=g.pts[m-1],f=g.pts[m-2];g.tip=[e[0],e[1],Math.sign(e[0]-f[0])||0,Math.sign(e[1]-f[1])||0];
+    g.bs=[g.x1+g.dxa*15,g.ya];g.be=[e[0]-g.tip[2]*34,e[1]-g.tip[3]*34];
+    g.segs=[];for(var i=0;i<m-1;i++){var A=g.pts[i],B=g.pts[i+1];g.segs.push({x1:A[0],y1:A[1],x2:B[0],y2:B[1],g:g})}
   });
   return list;
 }
@@ -340,42 +445,91 @@ function sheetFlow(p){
   if(!p.nodes.length)return '<div class="flow" style="height:160px"><div class="empty">作成画面で機種を追加すると、ここにコンサルの流れが出ます。</div></div>';
   var L=layout(p),G=edgeGeoms(p,L),h='';
   L.cols.forEach(function(t,ci){
+    if(t.tiers.length>1)return;
     var lx=L.n===1?0:14+ci*(L.nodeW+L.G)-14,lw=L.n===1?1059:L.nodeW+28;
     h+='<div class="ln" style="left:'+lx+'px;width:'+lw+'px;height:'+L.flowH+'px;background:'+t.tint+'"></div>'+
        '<div class="lh" style="left:'+lx+'px;width:'+lw+'px;background:'+t.color+';color:'+t.text+'">'+esc(t.name)+(t.sub?'<small>'+esc(t.sub)+'</small>':'')+'</div>';
   });
-  var svg='<svg width="1059" height="'+L.flowH+'" viewBox="0 0 1059 '+L.flowH+'">';
-  G.forEach(function(g){
-    var c=tier(g.b.nd.tier).color,q=g.p;
-    svg+='<path d="M'+q[0]+' '+q[1]+' C'+q[2]+' '+q[3]+' '+q[4]+' '+q[5]+' '+q[6]+' '+q[7]+'" fill="none" stroke="'+c+'" stroke-width="3"'+(g.skip?' stroke-dasharray="8 6"':'')+'/>';
-    var tx=q[6]-q[4],ty=q[7]-q[5],m=Math.sqrt(tx*tx+ty*ty)||1;tx/=m;ty/=m;
-    var bx=q[6]-13*tx,by=q[7]-13*ty,nx=-ty*6.5,ny=tx*6.5;
-    svg+='<polygon points="'+q[6]+','+q[7]+' '+(bx+nx)+','+(by+ny)+' '+(bx-nx)+','+(by-ny)+'" fill="'+c+'"/>';
-  });
-  svg+='</svg>';
-  h+=svg;
-  Object.keys(L.map).forEach(function(k){var o=L.map[k];h+=nodeHtml(o.nd,o.w,o.x,o.y,o.h)});
-  var placed=[];
+  L.blocks.forEach(function(q){h+='<div class="tblk" style="left:'+q.x+'px;top:'+q.y+'px;width:'+q.w+'px;height:'+q.h+'px;background:'+q.t.tint+';border-color:'+q.t.color+'"></div>'});
+  L.strips.forEach(function(q){h+='<div class="tstrip" style="left:'+q.x+'px;top:'+q.y+'px;width:'+q.w+'px;background:'+q.t.color+';color:'+q.t.text+'">'+esc(q.t.name)+(q.t.sub?'<small>'+esc(q.t.sub)+'</small>':'')+'</div>'});
+  var nodesH='';Object.keys(L.map).forEach(function(k){var o=L.map[k];nodesH+=nodeHtml(o.nd,o.w,o.x,o.y,o.h)});
+  var rects=Object.keys(L.map).map(function(k){var o=L.map[k];return {x:o.x-3,y:o.y-3,w:o.w+6,h:o.h+6}}).concat(L.strips.map(function(q){return {x:q.x,y:q.y,w:q.w,h:q.h}})),placed=[],Z=dzSizes(),FS=Z.t.label,PB=Z.pb,cw=13.5*FS,lh=17*FS,labH='';
+  var allSegs=[];G.forEach(function(g){g.segs.forEach(function(sg){allSegs.push(sg)})});
+  function hitR(a,b){return a.x<b.x+b.w&&b.x<a.x+a.w&&a.y<b.y+b.h&&b.y<a.y+a.h}
+  function segHit(r,sg){var x0=Math.min(sg.x1,sg.x2),x1=Math.max(sg.x1,sg.x2),y0=Math.min(sg.y1,sg.y2),y1=Math.max(sg.y1,sg.y2);return x0<r.x+r.w&&r.x<x1+1&&y0<r.y+r.h&&r.y<y1+1}
+  /* 一言は矢印の線の途中に埋め込む（——①きっかけ——＞）。入る長さの直線がなければ、線のすぐ脇に置く */
   G.forEach(function(g){
     var lab=String(g.e.label||''),c=tier(g.b.nd.tier).color,len=lab.length;
-    var Z=dzSizes(),FS=Z.t.label,PB=Z.pb,cw=13.5*FS,lh=17*FS;
-    var maxW=L.G>0?Math.min(L.G-12,150):150,need=len?len*cw+PB+26:PB+16,w=Math.max(PB+16,Math.min(maxW,Math.round(need)));
-    var per=Math.max(2,Math.floor((w-PB-26)/cw)),lines=len?Math.ceil(len/per):1,hh=Math.max(PB+10,lines*lh+10);
-    var cx=g.dir===0?(g.p[0]+52+w/2):g.lx,cy=g.ly;
-    var x=Math.max(0,Math.min(1059-w,cx-w/2)),y=cy-hh/2,tries=0,hit;
-    function clash(r){return x<r.x+r.w+4&&r.x<x+w+4&&y<r.y+r.h+4&&r.y<y+hh+4}
-    while(tries<14&&(hit=placed.filter(clash)[0])){y=hit.y+hit.h+6;tries++}
-    placed.push({x:x,y:y,w:w,h:hh});
-    h+='<div class="pill" style="left:'+x+'px;top:'+y+'px;width:'+w+'px;min-height:'+hh+'px;border-color:'+c+'"><i style="background:'+c+'">'+(g.i+1)+'</i>'+esc(lab)+'</div>';
+    var tot=0;g.segs.forEach(function(sg){tot+=Math.abs(sg.x2-sg.x1)+Math.abs(sg.y2-sg.y1)});
+    var lp=+g.e.lp||0,want=lp===1?.25:(lp===3?.75:.5),best=null,w=0,hh=0;
+    var iw=Math.round(PB+4+len*cw+(len?4:0)+11),ih=Math.max(PB+6,Math.round(lh)+4);
+    /* 1) 線の途中に埋め込む */
+    (function(){var run=0;
+      g.segs.forEach(function(sg,si){var L0=Math.abs(sg.x2-sg.x1)+Math.abs(sg.y2-sg.y1),hz=sg.y1===sg.y2,span=(hz?iw:ih)+8,M=10,M2=si===g.segs.length-1?24:10;
+        if(L0>=span+M+M2){for(var u=M+span/2;u<=L0-M2-span/2;u+=6){
+          var f=u/L0,cx=sg.x1+(sg.x2-sg.x1)*f,cy=sg.y1+(sg.y2-sg.y1)*f,pos=run+u,r={x:cx-iw/2,y:cy-ih/2,w:iw,h:ih};
+          if(r.x<0||r.x+r.w>1059||r.y<38||r.y+r.h>L.flowH-2)continue;
+          if(rects.some(function(o){return hitR(r,o)}))continue;
+          if(placed.some(function(o){return hitR(r,{x:o.x-4,y:o.y-4,w:o.w+8,h:o.h+8})}))continue;
+          var sc=Math.abs(pos/tot-want)*40,bad=0,rr={x:r.x-3,y:r.y-3,w:r.w+6,h:r.h+6};
+          allSegs.forEach(function(o){if(o===sg)return;if(segHit(rr,o)){bad+=(o.g===g)?100:25}});
+          if(bad>=100)continue;sc+=bad;
+          if(!best||sc<best.sc)best={sc:sc,x:r.x,y:r.y,w:iw,h:ih,cut:{si:si,hz:hz,a:hz?r.x-4:r.y-4,b:hz?r.x+iw+4:r.y+ih+4}}}}
+        run+=L0})})();
+    /* 2) 入らないときは、線の脇に置く */
+    if(!best){
+      var w0=Math.max(PB+16,Math.min(Math.round(PB+26+len*cw),200));w=w0;
+      var dims=function(ww){w=ww;var per=Math.max(2,Math.floor((w-PB-26)/cw)),lines=len?Math.ceil(len/per):1;hh=Math.max(PB+10,lines*lh+10)};
+      var scan=function(strict,limit){var run=0;
+        g.segs.forEach(function(sg){var L0=Math.abs(sg.x2-sg.x1)+Math.abs(sg.y2-sg.y1),hz=sg.y1===sg.y2;
+          for(var u=0;u<=L0;u+=6){var f=u/(L0||1),cx=sg.x1+(sg.x2-sg.x1)*f,cy=sg.y1+(sg.y2-sg.y1)*f,pos=run+u;
+            if(limit&&(pos<RT.SA+8||pos>tot-RT.SB-8))continue;
+            var cs=hz?[{x:cx-w/2,y:cy-hh-7},{x:cx-w/2,y:cy+7}]:[{x:cx+9,y:cy-hh/2},{x:cx-w-9,y:cy-hh/2}];
+            cs.forEach(function(q){var r={x:q.x,y:q.y,w:w,h:hh};
+              if(r.x<0||r.x+r.w>1059||r.y<38||r.y+r.h>L.flowH-2)return;
+              if(rects.some(function(o){return hitR(r,o)}))return;
+              if(placed.some(function(o){return hitR(r,{x:o.x-4,y:o.y-4,w:o.w+8,h:o.h+8})}))return;
+              var sc=Math.abs(pos/tot-want)*40+(limit?0:15),bad=0;
+              allSegs.forEach(function(o){if(segHit({x:r.x-3,y:r.y-3,w:r.w+6,h:r.h+6},o)){if(o.g===g)bad+=100;else bad+=strict?25:12}});
+              sc+=bad;if(strict&&bad>=100)return;
+              if(!best||sc<best.sc)best={sc:sc,x:r.x,y:r.y,w:w,h:hh}})}
+          run+=L0})};
+      [w0,150,120,96,80].filter(function(x,i){return i===0||x<w0}).some(function(ww){dims(ww);scan(true,true);if(!best)scan(true,false);return !!best});
+      if(!best){var m=g.pts[Math.floor(g.pts.length/2)];
+        [w0,120,96,80].filter(function(x,i){return i===0||x<w0}).some(function(ww){dims(ww);
+          for(var rad=0;rad<=420&&!best;rad+=6){for(var k=0;k<(rad?32:1)&&!best;k++){var an=k/32*6.2832,cx=m[0]+Math.cos(an)*rad,cy=m[1]+Math.sin(an)*rad,r={x:cx-w/2,y:cy-hh/2,w:w,h:hh};
+            if(r.x<0||r.x+r.w>1059||r.y<38||r.y+r.h>L.flowH-2)continue;
+            if(rects.some(function(q){return hitR(r,q)}))continue;
+            if(placed.some(function(q){return hitR(r,{x:q.x-4,y:q.y-4,w:q.w+8,h:q.h+8})}))continue;
+            var bad=0;allSegs.forEach(function(o){if(o.g!==g&&segHit(r,o))bad++});if(bad&&rad<300)continue;best={x:r.x,y:r.y,w:w,h:hh}}}
+          return !!best});
+        if(!best){dims(w0);best={x:Math.max(0,Math.min(1059-w,m[0]-w/2)),y:m[1]-hh/2,w:w,h:hh}}}
+    }
+    g.lab=best;placed.push({x:best.x,y:best.y,w:best.w,h:best.h});
+    labH+='<div class="pill'+(best.cut?' inl':'')+'" style="left:'+best.x+'px;top:'+best.y+'px;border-color:'+c+'99;'+(best.cut?'height:'+best.h+'px;':'width:'+best.w+'px;min-height:'+best.h+'px;')+'"><i style="background:'+c+';color:'+tier(g.b.nd.tier).text+'">'+(g.i+1)+'</i>'+esc(lab)+'</div>';
   });
-  return '<div class="flow" style="height:'+L.flowH+'px">'+h+'</div>';
+  /* 矢印を描く。一言を埋め込む部分だけ線を切る */
+  function parts(g){
+    var cut=g.lab&&g.lab.cut;if(!cut)return [g.pts];
+    var A=g.pts[cut.si],B=g.pts[cut.si+1],k=cut.hz?0:1,dirn=Math.sign(B[k]-A[k]),lo=Math.min(cut.a,cut.b),hi=Math.max(cut.a,cut.b),s0=dirn>0?lo:hi,s1=dirn>0?hi:lo;
+    var P0=cut.hz?[s0,A[1]]:[A[0],s0],P1=cut.hz?[s1,A[1]]:[A[0],s1];
+    return [g.pts.slice(0,cut.si+1).concat([P0]),[P1].concat(g.pts.slice(cut.si+1))]}
+  var svg='<svg width="1059" height="'+L.flowH+'" viewBox="0 0 1059 '+L.flowH+'">',PD=G.map(function(g){return parts(g).map(function(q){return roundPath(dedupePts(q),9)})});
+  PD.forEach(function(ds){ds.forEach(function(d){svg+='<path d="'+d+'" fill="none" stroke="#fff" stroke-opacity=".95" stroke-width="9.5" stroke-linejoin="round" stroke-linecap="butt"/>'})});
+  G.forEach(function(g,gi){
+    var c=tier(g.b.nd.tier).color,t=g.tip,ux=t[2],uy=t[3],bx=t[0]-19*ux,by=t[1]-19*uy,nx=-uy*9.5,ny=ux*9.5;
+    PD[gi].forEach(function(d){svg+='<path d="'+d+'" fill="none" stroke="'+c+'" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="butt"/>'});
+    svg+='<polygon points="'+t[0]+','+t[1]+' '+(bx+nx)+','+(by+ny)+' '+(bx-nx)+','+(by-ny)+'" fill="'+c+'"/>';
+  });
+  svg+='</svg>';
+  return '<div class="flow" style="height:'+L.flowH+'px">'+h+svg+nodesH+labH+'</div>';
 }
 function talkCards(p){
-  var tc=tierCols(p),byId={},cards=[];p.nodes.forEach(function(n){byId[n.id]=n});
+  var cm=tierColIdx(p),byId={},cards=[];p.nodes.forEach(function(n){byId[n.id]=n});
   p.edges.forEach(function(e,i){
     var a=byId[e.from],b=byId[e.to];if(!a||!b||a===b)return;
-    var ta=tier(a.tier),tb=tier(b.tier),skip=Math.abs(tc.indexOf(b.tier)-tc.indexOf(a.tier))>1;
-    var step=a.tier==='STD'&&b.tier==='MID';
+    var ta=tier(a.tier),tb=tier(b.tier),skip=Math.abs(cm[b.tier]-cm[a.tier])>1;
+    var step=stepOf(a.tier,b.tier,p);
     var hear=String(e.hearing||'').split('\n').map(function(x){return x.trim()}).filter(Boolean);
     cards.push('<div class="tc"><div class="tch"><span class="no" style="background:'+tb.color+';color:'+tb.text+'">'+(i+1)+'</span>'+
       '<span class="tg" style="background:'+ta.color+';color:'+ta.text+'">'+esc(ta.name)+'</span>'+esc(a.model||a.name||'(未入力)')+'<span>→</span>'+
@@ -386,7 +540,6 @@ function talkCards(p){
   });
   return cards;
 }
-function tierCols(p){return TIERS.filter(function(t){return p.nodes.some(function(n){return n.tier===t.id})}).map(function(t){return t.id})}
 function bullets(t){return String(t||'').split(/\n/).map(function(x){return x.replace(/^\s*[・･•\-\*]\s*/,'').trim()}).filter(Boolean)}
 function fbox(title,t){var b=bullets(t);return b.length?'<div class="fb2"><h3>'+esc(title)+'</h3><ul>'+b.map(function(x){return '<li>'+esc(x)+'</li>'}).join('')+'</ul></div>':''}
 function deptBand(p,sub){
@@ -402,9 +555,9 @@ function pageOne(p){
    '<div class="pm"><div><small>対象日</small><span>'+esc(p.period||'-')+'</span></div><div><small>店舗</small><span>'+esc(p.store||'-')+'</span></div><div><small>作成者</small><span>'+esc(p.author||'-')+'</span></div></div></div>'+
    (nb?'<div class="band'+(nb===1?' one':'')+'">'+band+'</div>':'')+
    sheetFlow(p)+
-   (first.length?'<div><h2 class="h2p" style="margin-bottom:10px">コンサルトーク <small style="font-size:12px;font-weight:500;color:#5A6577">矢印の番号に対応します。破線は途中の段を飛ばす流れです。</small></h2><div class="tgrid">'+first.join('')+'</div></div>':'')+
+   (first.length?'<div><h2 class="h2p" style="margin-bottom:10px">コンサルトーク <small style="font-size:12px;font-weight:500;color:#5A6577">矢印の番号に対応します。</small></h2><div class="tgrid">'+first.join('')+'</div></div>':'')+
    (function(){var a=fbox(p.accT||'付帯品',p.acc),b=fbox(p.s4T||'S4',p.s4),n=(a?1:0)+(b?1:0);return n?'<div class="foot2'+(n===1?' one':'')+'">'+a+b+'</div>':''})()+
-   '<div class="pf">出力日 '+d+'</div></div>';
+   '<div class="pf">戦略メーカー Ver.'+VERSION+'　出力日 '+d+'</div></div>';
 }
 function flowPages(p){
   var rest=talkCards(p).slice(6),pages=[],per=9;
@@ -439,7 +592,7 @@ window.addEventListener('resize',fit);
 /* ---------- author pane ---------- */
 function nodeCard(n){
   var t=tier(n.tier),pv=n.photo?'<div class="thumb" style="background-image:url('+n.photo+')"></div>':'<div class="thumb">写真なし</div>';
-  return '<div class="item"><div class="ihead"><select data-nid="'+n.id+'" data-f="tier" style="background:'+t.color+';color:'+t.text+';font-weight:700">'+TIERS.map(function(x){return '<option value="'+x.id+'"'+(x.id===n.tier?' selected':'')+'>'+esc(tnOf(x.id).name)+'</option>'}).join('')+'</select><span class="hint">'+esc(t.sub)+'</span><span class="sp"></span>'+
+  return '<div class="item"><div class="ihead"><select data-nid="'+n.id+'" data-f="tier" style="background:'+t.color+';color:'+t.text+';font-weight:700">'+tierList().map(function(x){return '<option value="'+x.id+'"'+(x.id===n.tier?' selected':'')+'>'+esc(x.n)+'</option>'}).join('')+'</select><span class="hint">'+esc(t.sub)+'</span><span class="sp"></span>'+
    '<button class="btn sm" data-act="nup" data-id="'+n.id+'" aria-label="上へ">↑</button><button class="btn sm" data-act="ndown" data-id="'+n.id+'" aria-label="下へ">↓</button><button class="btn sm" data-act="ndel" data-id="'+n.id+'" aria-label="削除">削除</button></div>'+
    '<div class="form"><label>メーカー<input list="makers" data-nid="'+n.id+'" data-f="maker" value="'+esc(n.maker)+'"></label>'+
    '<label>型番<input data-nid="'+n.id+'" data-f="model" value="'+esc(n.model)+'"></label>'+
@@ -450,13 +603,16 @@ function nodeCard(n){
    (n.photo?'<button class="btn sm" data-act="pdel" data-id="'+n.id+'">写真を外す</button>':'')+'<span class="hint">JPEG・PNG。自動で小さくします。</span></div></div></div></div>';
 }
 function tierNamesCard(){
-  var p=st.cur;
-  return '<details class="tnbox"'+(p.tn&&Object.keys(p.tn).length?' open':'')+'><summary>段の名前を変える（初期値: STD / MID / FLAG）</summary>'+
-   '<p class="hint">コンサル先の呼び方を、店舗や部門に合わせて変えられます。例）入口 → おすすめ → 本命</p>'+
-   TIERS.map(function(t){var u=tier(t.id);return '<div class="tnrow"><span class="chip" style="background:'+u.color+';color:'+u.text+'">'+esc(t.id)+'</span>'+
-     '<label>名前<input maxlength="10" data-tn="'+t.id+'" data-tf="n" value="'+esc(u.name)+'"></label>'+
-     '<label>ひとこと説明<input maxlength="20" data-tn="'+t.id+'" data-tf="s" value="'+esc(u.sub)+'"></label></div>'}).join('')+
-   '<div class="row"><button class="btn sm" data-act="tnreset">名前を初期値に戻す</button></div></details>'}
+  var p=st.cur,L=tierList(p),used={};p.nodes.forEach(function(n){used[n.tier]=1});
+  return '<details class="tnbox" id="tnb"'+((st.tnOpen||Array.isArray(p.tiers))?' open':'')+'><summary>段を編集する（追加・名前・色・順番）</summary>'+
+   '<p class="hint">コンサル先の段は、「順番」の数字（1が一番左）で並びます。<b>同じ数字にすると、同じ列の中で上から順に並びます。</b>最大'+MAXT+'段まで増やせます（初期は STD / MID / FLAG）。機種が1件もない段は、シートに出ません。シートに出る段が5つ以上になると、カードが細くなって見づらくなるため、4段までがおすすめです。</p>'+
+   L.map(function(t,i){var u=tier(t.id);return '<div class="tnrow"><input type="color" data-tcol="'+t.id+'" value="'+u.color+'" aria-label="色">'+
+     '<label>名前<input maxlength="10" data-tn="'+t.id+'" data-tf="n" value="'+esc(t.n)+'"></label>'+
+     '<label>ひとこと説明<input maxlength="20" data-tn="'+t.id+'" data-tf="s" value="'+esc(t.s)+'"></label>'+
+     '<span class="tnb"><label class="ord">順番<select data-tord="'+t.id+'" aria-label="序列（1が一番左。同じ数字は同じ列に縦に並びます）">'+Array.apply(null,Array(MAXT)).map(function(_,k){return '<option value="'+(k+1)+'"'+(k+1===t.o?' selected':'')+'>'+(k+1)+'</option>'}).join('')+'</select></label>'+
+     '<button class="btn sm" data-act="tdel" data-id="'+t.id+'"'+(L.length<=1?' disabled':'')+(used[t.id]?' title="機種がある段は削除できません"':'')+'>削除</button></span></div>'}).join('')+
+   '<div class="row"><button class="btn sm" data-act="tadd"'+(L.length>=MAXT?' disabled':'')+'>＋ 段を追加</button><button class="btn sm" data-act="tnreset">段を初期値に戻す</button></div>'+
+   '<p class="hint">初期値に戻すと、STD / MID / FLAG 以外の段の機種は STD に移ります。</p></details>'}
 function deptPick(){
   var p=st.cur;
   return '<div class="wide"><span class="hint">部門（選ぶと、作戦表の背景・帯・マークが部門の色になります）</span><div class="dpick">'+
@@ -465,13 +621,14 @@ function deptPick(){
 function edgeCard(e,i){
   var p=st.cur,opt=function(sel){return p.nodes.map(function(n){return '<option value="'+n.id+'"'+(n.id===sel?' selected':'')+'>'+esc(nlabel(n))+'</option>'}).join('')};
   var a=p.nodes.filter(function(x){return x.id===e.from})[0],b=p.nodes.filter(function(x){return x.id===e.to})[0];
-  var step=a&&b&&a.tier==='STD'&&b.tier==='MID';
+  var step=a&&b&&stepOf(a.tier,b.tier,p);
   return '<div class="item"><div class="ihead"><span class="chip" style="background:var(--ink);color:var(--bg)">'+(i+1)+'</span><span class="sp"></span>'+
    '<button class="btn sm" data-act="eup" data-id="'+e.id+'" aria-label="上へ">↑</button><button class="btn sm" data-act="edown" data-id="'+e.id+'" aria-label="下へ">↓</button><button class="btn sm" data-act="edel" data-id="'+e.id+'" aria-label="削除">削除</button></div>'+
    '<div class="form"><label>どの機種から<select data-eid="'+e.id+'" data-f="from">'+opt(e.from)+'</select></label>'+
    '<label>どの機種へ<select data-eid="'+e.id+'" data-f="to">'+opt(e.to)+'</select></label>'+
    '<label class="wide">きっかけ（矢印に出る一言・24文字まで）<input maxlength="24" data-eid="'+e.id+'" data-f="label" value="'+esc(e.label)+'"></label>'+
-   '<label class="wide">'+(step?'ステップアップのヒアリングトーク（'+esc(tnOf('STD').name)+'→'+esc(tnOf('MID').name)+'）':'ヒアリングトーク')+'<span class="hint">お客様に聞くこと。1行に1つ書きます。</span><textarea rows="3" data-eid="'+e.id+'" data-f="hearing" placeholder="例）ふだん動画は何で見ますか？">'+esc(e.hearing)+'</textarea></label>'+
+   '<label class="wide">一言の表示位置<select data-eid="'+e.id+'" data-f="lp">'+[['0','おまかせ（見やすい場所）'],['1','出発の機種の近く'],['2','矢印の中ほど'],['3','到着の機種の近く']].map(function(o){return '<option value="'+o[0]+'"'+(String(e.lp||0)===o[0]?' selected':'')+'>'+o[1]+'</option>'}).join('')+'</select></label>'+
+   '<label class="wide">'+(step?'ステップアップのヒアリングトーク（'+esc(tnOf(a.tier).name)+'→'+esc(tnOf(b.tier).name)+'）':'ヒアリングトーク')+'<span class="hint">お客様に聞くこと。1行に1つ書きます。</span><textarea rows="3" data-eid="'+e.id+'" data-f="hearing" placeholder="例）ふだん動画は何で見ますか？">'+esc(e.hearing)+'</textarea></label>'+
    '<label class="wide">コンサルのしかた<textarea rows="3" data-eid="'+e.id+'" data-f="talk">'+esc(e.talk)+'</textarea></label></div></div>';
 }
 function renderEditor(){
@@ -482,9 +639,9 @@ function renderEditor(){
    '<label>対象日<input '+d('period',p.period)+'></label><label>店舗<input '+d('store',p.store)+'></label>'+
    '<label class="wide">作成者<input '+d('author',p.author)+'></label>'+
    '<label class="wide">今週の狙い<textarea rows="2" data-k="aim">'+esc(p.aim)+'</textarea></label></div></section>'+
-  '<section class="card"><h2>機種（'+TIERS.map(function(t){return esc(tnOf(t.id).name)}).join(' / ')+'）</h2><p class="hint">段は必要なものだけ使えます。真ん中の段を使わず、入口から本命へ直接つなぐこともできます。</p>'+tierNamesCard()+
+  '<section class="card"><h2>機種（'+tierList().map(function(t){return esc(t.n)}).join(' / ')+'）</h2><p class="hint">段は必要なものだけ使えます。途中の段を飛ばして、入口から本命へ直接つなぐこともできます。</p>'+tierNamesCard()+
    (p.nodes.length?p.nodes.map(nodeCard).join(''):'<p class="hint">まだ機種がありません。下のボタンで追加してください。</p>')+
-   '<div class="row">'+TIERS.map(function(t){var u=tier(t.id);return '<button class="btn" data-act="nadd" data-t="'+t.id+'" style="background:'+u.color+';color:'+u.text+';border-color:'+u.color+'">＋ '+esc(t.name)+'を追加</button>'}).join('')+'</div></section>'+
+   '<div class="row">'+tierList().map(function(t){var u=tier(t.id);return '<button class="btn" data-act="nadd" data-t="'+t.id+'" style="background:'+u.color+';color:'+u.text+';border-color:'+u.color+'">＋ '+esc(u.name)+'を追加</button>'}).join('')+'</div></section>'+
   '<section class="card"><h2>コンサルの流れ</h2><p class="hint">矢印1本が、お客様の反応から次の機種へ進む1つの流れです。</p>'+
    (p.edges.length?p.edges.map(edgeCard).join(''):'<p class="hint">機種を2つ以上追加すると、流れをつなげます。</p>')+
    '<div class="row"><button class="btn" data-act="eadd"'+(p.nodes.length<2?' disabled':'')+'>＋ 流れを追加</button></div></section>'+
@@ -512,7 +669,7 @@ function designCard(){
    '<div class="wide"><span class="hint">用紙</span>'+seg('paper',[['a4','A4'],['a3','A3']])+'</div>'+
    '<div class="wide"><span class="hint">用紙の向き</span>'+seg('orient',[['auto','自動'],['land','横'],['port','縦']])+'</div>'+
    '<div class="wide"><span class="hint">出力の解像度（PDF・画像）。拡大しても文字がつぶれにくいのは「高精細」「最高」です</span>'+seg('res',[['std','標準'],['hi','高精細'],['max','最高']])+'<span class="hint" id="reshint">'+resHint(D.res)+'</span></div>'+
-   '<div class="wide"><span class="hint">色</span><div class="swatches">'+sw('STD',tnOf('STD').name,D.c.STD,'data-dzc')+sw('MID',tnOf('MID').name,D.c.MID,'data-dzc')+sw('FLAG',tnOf('FLAG').name,D.c.FLAG,'data-dzc')+sw('price','価格',D.price,'data-dzp')+'</div></div>'+
+   '<div class="wide"><span class="hint">価格の色（段の色は「機種」の「段を編集する」で変えられます）</span><div class="swatches">'+sw('price','価格',D.price,'data-dzp')+'</div></div>'+
    '<div class="wide"><span class="hint">色の組み合わせ</span><div class="seg">'+PRESETS.map(function(x,i){return '<button class="btn sm" data-act="preset" data-i="'+i+'">'+x[0]+'</button>'}).join('')+'<button class="btn sm" data-act="dzreset">すべて初期値に戻す</button></div></div>'+
   '</div></details>';
 }
@@ -627,14 +784,19 @@ async function decBytes(u8,pw){if(u8.length<45)throw new Error('bad');var key=aw
 function cleanPlan(o){
   if(!o||typeof o!=='object'||Array.isArray(o))throw new Error('bad');
   function S(v,m){return typeof v==='string'?v.slice(0,m):''}
-  var ids={},nodes=[],edges=[],tids=TIERS.map(function(t){return t.id});
+  var ids={},nodes=[],edges=[],tiers=null;
+  if(Array.isArray(o.tiers)&&o.tiers.length){var seen={};tiers=[];o.tiers.slice(0,MAXT).forEach(function(t,i){if(!t||typeof t!=='object')return;
+    var id=(typeof t.id==='string'&&/^[A-Za-z0-9]{1,12}$/.test(t.id)&&!seen[t.id])?t.id:'t'+(i+1)+'x';seen[id]=1;
+    var r={id:id,n:(typeof t.n==='string'&&t.n.trim())?t.n.trim().slice(0,10):'段'+(i+1),s:typeof t.s==='string'?t.s.slice(0,20):'',o:(typeof t.o==='number'&&isFinite(t.o))?Math.max(1,Math.min(MAXT,Math.round(t.o))):i+1};
+    if(/^#[0-9a-fA-F]{6}$/.test(t.color||''))r.color=t.color;tiers.push(r)});if(!tiers.length)tiers=null}
+  var tids=(tiers||TIERS).map(function(t){return t.id});
   (Array.isArray(o.nodes)?o.nodes:[]).slice(0,40).forEach(function(n,i){
     if(!n||typeof n!=='object')return;var id='n'+(i+1);if(typeof n.id==='string')ids[n.id]=id;
     var pr=(typeof n.price==='number'&&isFinite(n.price)&&n.price>=0&&n.price<1e8)?Math.round(n.price):'';
-    nodes.push({id:id,tier:tids.indexOf(n.tier)>=0?n.tier:'STD',maker:S(n.maker,60),model:S(n.model,60),name:S(n.name,80),price:pr,point:S(n.point,400),photo:''})});
+    nodes.push({id:id,tier:tids.indexOf(n.tier)>=0?n.tier:tids[0],maker:S(n.maker,60),model:S(n.model,60),name:S(n.name,80),price:pr,point:S(n.point,400),photo:''})});
   (Array.isArray(o.edges)?o.edges:[]).slice(0,80).forEach(function(g,i){
     if(!g||typeof g!=='object'||!ids[g.from]||!ids[g.to])return;
-    edges.push({id:'e'+(edges.length+1),from:ids[g.from],to:ids[g.to],label:S(g.label,40),hearing:S(g.hearing,600),talk:S(g.talk,800)})});
+    edges.push({id:'e'+(edges.length+1),from:ids[g.from],to:ids[g.to],label:S(g.label,40),lp:([1,2,3].indexOf(+g.lp)>=0?+g.lp:0),hearing:S(g.hearing,600),talk:S(g.talk,800)})});
   var d=(o.design&&typeof o.design==='object')?o.design:{},nd={},sml=function(v){return v==='s'||v==='m'||v==='l'};
   if(d.t&&typeof d.t==='object'){nd.t={};TKEYS.forEach(function(k){if(sml(d.t[k]))nd.t[k]=d.t[k]})}
   if(sml(d.num))nd.num=d.num;if(sml(d.photo))nd.photo=d.photo;
@@ -647,7 +809,7 @@ function cleanPlan(o){
   var out={id:uid('p'),title:S(o.title,80),period:S(o.period,60),store:S(o.store,60),author:S(o.author,40),aim:S(o.aim,400),nodes:nodes,edges:edges,
     notes:S(o.notes,1500),acc:S(o.acc,1000),s4:S(o.s4,1000),accT:S(o.accT,20)||'付帯品',s4T:S(o.s4T,20)||'S4',updated:0};
   if(Object.keys(nd).length)out.design=nd;
-  if(Object.keys(tn).length)out.tn=tn;
+  if(tiers)out.tiers=tiers;else if(Object.keys(tn).length)out.tn=tn;
   if(DEPTS.some(function(d){return d.id===o.dept}))out.dept=o.dept;
   return out}
 async function shareBuild(plan,pw){
@@ -663,6 +825,13 @@ async function shareOpen(info,pw){
   var j=JSON.parse(new TextDecoder().decode(u));if(!j||j.v!==1)throw new Error('ver');return cleanPlan(j.p)}
 function shClose(){$('#shov').hidden=true;$('#shbox').innerHTML=''}
 function shRender(h){$('#shbox').innerHTML=h;$('#shov').hidden=false;var f=$('#shbox').querySelector('input,textarea,button');if(f)f.focus()}
+var VERSION='2.4',CHANGELOG=[["2.4", "2026年11月", "コメント表示の改良", ["きっかけコメントを矢印の線の途中に埋め込む表示に変更（━━ ① 配信を見る ━━▶）", "コメントを、さりげない細い四角枠で囲む（色は行き先の段の色）", "直線が短くて入らないときは、線のすぐ脇に置く", "矢印ごとに「一言の表示位置」（おまかせ／出発の近く／中ほど／到着の近く）を選べる", "更新履歴の表示と、シート下部へのバージョン表記を追加"]], ["2.3", "2026年11月", "自動レイアウトの刷新（矢印）", ["矢印の経路を、機種を避けて直角に進む経路探索方式に全面刷新", "他の矢印と18px以上離して引き、平行して重ならないようにした", "曲がりが少ない経路を選び、近い矢印から先に引く", "矢印を実線のみに統一し、線を太く・矢じりを大きくした", "機種どうしの縦の間隔を広げ、矢印の通り道を確保"]], ["2.2", "2026年11月", "同じ順番の段を縦に並べる", ["「順番」が同じ段は、同じ列に縦に並ぶ", "同じ列の段は、共通の見出しにまとめず、段ごとに色付きの見出しと枠で表示", "ステップアップのヒアリングの判定を、順番の数字ベースに変更"]], ["2.1", "2026年11月", "段の順番を数字で選べるように", ["各段に「順番」（1〜6）を設定でき、1が一番左になる", "矢印が重なって見えなくなる問題の修正（縦線を通路ごとに割り当て）", "同じ段を結ぶ矢印、段を飛ばす矢印の通り道を整理"]], ["2.0", "2026年11月", "部門テーマとコンサル先の追加", ["部門（季節AV／家電／情報／通信）を選ぶと、背景色とデザインがその部門のシートに切り替わる", "コンサル先の段を追加できる（初期は STD / MID / FLAG、最大6つ）", "段の名前・補足・色を編集でき、不要な段は削除できる", "書き出すファイル名の先頭に部門名を付ける"]], ["1.2", "2026年11月", "リンクで共有", ["作戦表をリンクにして共有する機能（サーバー保存なし、リンク内にデータを格納）", "合言葉（8文字以上）による暗号化に対応（任意）", "受け取り側に確認画面を表示し、不正なデータは読み込まない安全対策", "写真はリンクに含めない"]], ["1.1", "2026年11月", "画像出力と高解像度出力", ["PDFに加えて、PNG画像で出力できるようにした", "解像度（標準／高／最高）を選べ、拡大しても文字がつぶれにくい", "端末ごとの上限に合わせて、解像度を自動で調整", "README（PDF／Markdown）と、図入りの使い方ガイドを作成"]], ["1.0", "2026年11月", "初版公開（GitHub Pages）", ["作戦のフロー図（STD／MID／FLAG の3段、矢印、段を飛ばす流れ）", "機種カード（メーカー＝型番／価格／特徴／伝えること／写真）", "コンサルトーク（ヒアリングとコンサルのしかた）を1ページ目に掲載", "今週の狙い・注意点を大きな文字で表示し、タイトルを最大の文字に", "コンサルトーク下に「付帯品（左）」「S4（右）」の箇条書き枠を追加", "A4／A3、横／縦、文字サイズの詳細設定、保存、PDF出力", "サイト名を「戦略メーカー」、公開URLを sennryakumaker に変更", "※ 色の再設計は取りやめ、以前の配色に戻して公開"]]];
+function verDialog(){
+  shRender('<h2 id="shtitle">更新履歴　<small style="font-weight:500;color:var(--muted)">いまは Ver.'+VERSION+'</small></h2>'+
+   CHANGELOG.map(function(v){return '<div class="warn" style="margin:10px 0"><b>Ver.'+esc(v[0])+'</b>　'+esc(v[2])+' <span style="color:var(--muted)">（'+esc(v[1])+'）</span><ul style="margin:4px 0 0;padding-left:1.2em">'+v[3].map(function(x){return '<li>'+esc(x)+'</li>'}).join('')+'</ul></div>'}).join('')+
+   '<div class="row"><button class="btn" id="shx">閉じる</button></div>');
+  $('#shx').onclick=shClose;
+}
 function shareDialog(){
   var p=st.cur;
   shRender('<h2 id="shtitle">共有リンクを作る</h2>'+
@@ -730,7 +899,8 @@ function moveIn(arr,id,dir,same){
 function changed(){st.dirty=true;st.touched=true;st.msg='';renderBar();schedulePreview()}
 document.addEventListener('input',function(e){
   var t=e.target,p=st.cur;if(!t.dataset)return;
-  if(t.dataset.tn){p.tn=Object.assign({},p.tn||{});p.tn[t.dataset.tn]=Object.assign({},p.tn[t.dataset.tn]||{});p.tn[t.dataset.tn][t.dataset.tf]=t.value;changed();return}
+  if(t.dataset.tcol){var T=ensureTiers(p),x=T.filter(function(q){return q.id===t.dataset.tcol})[0];if(x){x.color=t.value;changed()}return}
+  if(t.dataset.tn){var T2=ensureTiers(p),y=T2.filter(function(q){return q.id===t.dataset.tn})[0];if(y){y[t.dataset.tf]=t.value;changed()}return}
   if(t.dataset.dzc||t.dataset.dzp){
     p.design=Object.assign({},p.design||{});
     if(t.dataset.dzc){p.design.c=Object.assign({},p.design.c||{});p.design.c[t.dataset.dzc]=t.value}else{p.design.price=t.value}
@@ -764,6 +934,7 @@ document.addEventListener('click',function(e){
   if(a==='del'){deletePlan();return}
   if(a==='pdf'){exportPdf();return}
   if(a==='img'){exportImg();return}
+  if(a==='ver'){verDialog();return}
   if(a==='share'){shareDialog();return}
   if(a==='nadd'){p.nodes.push({id:uid('n'),tier:b.dataset.t,maker:'',model:'',name:'',price:'',point:'',photo:''})}
   else if(a==='ndel'){p.nodes=p.nodes.filter(function(x){return x.id!==id});p.edges=p.edges.filter(function(x){return x.from!==id&&x.to!==id})}
@@ -772,10 +943,14 @@ document.addEventListener('click',function(e){
   else if(a==='dz'){p.design=Object.assign({},p.design||{});p.design[b.dataset.k]=b.dataset.v}
   else if(a==='dzt'){p.design=Object.assign({},p.design||{});p.design.t=Object.assign({},dz(p).t);p.design.t[b.dataset.k]=b.dataset.v}
   else if(a==='dzall'){p.design=Object.assign({},p.design||{});var tt={};TKEYS.forEach(function(k){tt[k]=b.dataset.v});p.design.t=tt}
-  else if(a==='preset'){p.design=Object.assign({},p.design||{});p.design.c=Object.assign({},PRESETS[+b.dataset.i][1])}
+  else if(a==='preset'){var PR=PRESETS[+b.dataset.i][1];p.design=Object.assign({},p.design||{});p.design.c=Object.assign({},PR);
+    if(Array.isArray(p.tiers)){ensureTiers(p);var RK=ranksOf(p),m=RK.length,key=['STD','MID','FLAG'];p.tiers.forEach(function(t){var i=RK.indexOf(t.o),u=m<2?0:i/(m-1)*2,k=Math.min(1,Math.floor(u)),f=u-k;t.color=mixHex(PR[key[k]],PR[key[k+1]],f)})}}
   else if(a==='dzreset'){delete p.design}
   else if(a==='dept'){if(b.dataset.v)p.dept=b.dataset.v;else delete p.dept}
-  else if(a==='tnreset'){delete p.tn}
+  else if(a==='tadd'){var T=ensureTiers(p);if(T.length<MAXT){var us={};T.forEach(function(x){if(x.color)us[x.color.toLowerCase()]=1});var col=PAL.filter(function(c){return !us[c.toLowerCase()]})[0]||PAL[T.length%PAL.length];var mo=0;tierList(p).forEach(function(x){mo=Math.max(mo,x.o)});T.push({id:uid('t'),n:'段'+(T.length+1),s:'',color:col,o:Math.min(MAXT,mo+1)});st.tnOpen=true}}
+  else if(a==='tdel'){var T=ensureTiers(p);if(p.nodes.some(function(n){return n.tier===id})){st.err='この段には機種があります。先に機種を別の段へ移すか、削除してください。';renderBar();return}if(T.length>1)p.tiers=T.filter(function(x){return x.id!==id})}
+  else if(a==='tup'||a==='tdown'){var T=ensureTiers(p),i=T.findIndex(function(x){return x.id===id}),j=i+(a==='tup'?-1:1);if(i>=0&&j>=0&&j<T.length){var q=T[i];T[i]=T[j];T[j]=q}}
+  else if(a==='tnreset'){var ok=TIERS.map(function(t){return t.id});p.nodes.forEach(function(n){if(ok.indexOf(n.tier)<0)n.tier='STD'});delete p.tiers;delete p.tn;st.tnOpen=false}
   else if(a==='pdel'){var pn=p.nodes.filter(function(x){return x.id===id})[0];if(pn)pn.photo=''}
   else if(a==='eadd'){p.edges.push({id:uid('e'),from:p.nodes[0].id,to:p.nodes[Math.min(1,p.nodes.length-1)].id,label:'',hearing:'',talk:''})}
   else if(a==='edel'){p.edges=p.edges.filter(function(x){return x.id!==id})}
@@ -797,11 +972,12 @@ function attachPhoto(id,file){
   img.onerror=function(){URL.revokeObjectURL(url);st.err='写真を読み込めませんでした。JPEGかPNGを選んでください。';renderBar()};
   img.src=url;
 }
-document.addEventListener('toggle',function(e){if(e.target&&e.target.id==='adv')st.adv=e.target.open},true);
+document.addEventListener('toggle',function(e){if(e.target&&e.target.id==='adv')st.adv=e.target.open;if(e.target&&e.target.id==='tnb')st.tnOpen=e.target.open},true);
 document.addEventListener('focusout',function(e){var t=e.target;if(t&&t.dataset&&t.dataset.tn&&!(e.relatedTarget&&e.relatedTarget.closest&&e.relatedTarget.closest('.tnbox')))renderEditor()});
 document.addEventListener('change',function(e){
   var t=e.target;
-  if(t&&t.dataset&&(t.dataset.dzc||t.dataset.dzp)){renderEditor();return}
+  if(t&&t.dataset&&t.dataset.tord){var T=ensureTiers(st.cur),q=T.filter(function(x){return x.id===t.dataset.tord})[0];if(q){q.o=Math.max(1,Math.min(MAXT,+t.value||1));changed();renderEditor()}return}
+  if(t&&t.dataset&&(t.dataset.dzc||t.dataset.dzp||t.dataset.tcol)){renderEditor();return}
   if(t&&t.dataset&&t.dataset.photo){var f=t.files&&t.files[0];if(f)attachPhoto(t.dataset.photo,f);t.value=''}
 });
 $('#plansel').addEventListener('change',function(e){
