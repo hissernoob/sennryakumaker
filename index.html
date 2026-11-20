@@ -40,6 +40,14 @@ label{display:flex;flex-direction:column;gap:3px;font-size:12px;color:var(--mute
 .btn.pri{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
 .btn.sm{padding:3px 9px;font-size:12px}
 .btn:disabled{opacity:.5;cursor:not-allowed}
+.shov{position:fixed;inset:0;background:rgba(10,15,25,.55);display:flex;align-items:center;justify-content:center;padding:16px;z-index:50}
+.shov[hidden]{display:none}
+.shbox{background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:14px;max-width:560px;width:100%;max-height:92vh;overflow:auto;padding:18px 20px;box-shadow:0 10px 40px rgba(0,0,0,.35)}
+.shbox h2{margin:0 0 6px;font-size:18px}.shbox p{margin:6px 0;font-size:13px;line-height:1.7}
+.shbox .warn{border-left:4px solid var(--accent);background:var(--surface);padding:6px 10px;border-radius:4px;font-size:12.5px;line-height:1.7;margin:8px 0}
+.shbox .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.shbox textarea{font-size:12px;word-break:break-all;height:90px}
+.shbox .shpv{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:8px 12px;font-size:13px}
 .status{font-size:12px;color:var(--muted);display:flex;gap:6px;align-items:center;flex-wrap:wrap}
 .dot{width:8px;height:8px;border-radius:99px;background:var(--muted);display:inline-block}
 .dot.ok{background:#2E9E5B}.dot.warn{background:#D99A1B}
@@ -162,6 +170,7 @@ summary h2{display:inline}
     <select id="plansel" aria-label="保存した作戦表"></select>
     <button class="btn" data-act="save" id="savebtn">保存</button>
     <button class="btn" data-act="del" id="delbtn">削除</button>
+    <button class="btn" data-act="share" id="sharebtn" hidden>共有リンク</button>
     <button class="btn" data-act="img" id="imgbtn">画像を出力</button>
     <button class="btn pri" data-act="pdf" id="pdfbtn">PDFを出力</button>
   </div>
@@ -173,6 +182,7 @@ summary h2{display:inline}
   </div>
 </div>
 <div id="holder"></div>
+<div class="shov" id="shov" hidden role="dialog" aria-modal="true" aria-labelledby="shtitle"><div class="shbox" id="shbox"></div></div>
 <datalist id="makers"><option value="シャープ"><option value="ソニー"><option value="パナソニック"><option value="REGZA"><option value="LG"><option value="ハイセンス"></datalist>
 
 <script>
@@ -470,7 +480,7 @@ function renderBar(){
   var o=(!inList?'<option value="'+st.cur.id+'" selected>'+esc(st.cur.title||'新しい作戦表')+'（未保存）</option>':'')+
     list.map(function(x){return '<option value="'+x.id+'"'+(x.id===st.cur.id?' selected':'')+'>'+esc(x.title||'無題')+(x.period?' / '+esc(x.period):'')+'</option>'}).join('');
   sel.innerHTML=o;
-  $('#savebtn').disabled=!canSave();$('#delbtn').disabled=!canSave()||!inList;$('#pdfbtn').disabled=st.busy;$('#imgbtn').disabled=st.busy;
+  $('#savebtn').disabled=!canSave();$('#delbtn').disabled=!canSave()||!inList;$('#pdfbtn').disabled=st.busy;$('#imgbtn').disabled=st.busy;$('#sharebtn').hidden=!STANDALONE;
   var m={ok:['ok','店舗間で共有して保存します'],wait:['warn','共有データに接続中です'],fail:['warn','共有データに接続できません。保存はできない場合があります'],local:['warn','この端末にだけ保存します']}[st.status];
   $('#status').innerHTML='<span class="dot '+m[0]+'"></span>'+m[1]+(st.dirty?' / 未保存の変更があります':'')+
    (st.canWrite===false?' / 閲覧のみ（保存できません）':'')+(st.msg?' / '+esc(st.msg):'')+(st.err?' <span class="err">'+esc(st.err)+'</span>':'');
@@ -547,6 +557,117 @@ async function exportRun(kind){
 function exportPdf(){return exportRun('pdf')}
 function exportImg(){return exportRun('img')}
 
+
+/* ---------- link sharing (no server: the plan lives inside the link's # part) ---------- */
+var SH={maxHash:60000,maxRaw:200000,iter:250000};
+function b64u(u8){var s='';for(var i=0;i<u8.length;i+=8192)s+=String.fromCharCode.apply(null,u8.subarray(i,i+8192));return btoa(s).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}
+function unb64u(t){if(!/^[A-Za-z0-9_-]*$/.test(t))throw new Error('bad');t=t.replace(/-/g,'+').replace(/_/g,'/');while(t.length%4)t+='=';var s=atob(t),b=new Uint8Array(s.length);for(var i=0;i<s.length;i++)b[i]=s.charCodeAt(i);return b}
+async function pipeBytes(u8,tr,limit){
+  var rd=new Blob([u8]).stream().pipeThrough(tr).getReader(),parts=[],n=0;
+  for(;;){var r=await rd.read();if(r.done)break;n+=r.value.length;if(n>limit){try{await rd.cancel()}catch(e){}throw new Error('too big')}parts.push(r.value)}
+  var out=new Uint8Array(n),o=0;parts.forEach(function(x){out.set(x,o);o+=x.length});return out}
+function cat(){var n=0,a=[].slice.call(arguments);a.forEach(function(x){n+=x.length});var o=new Uint8Array(n),k=0;a.forEach(function(x){o.set(x,k);k+=x.length});return o}
+async function deriveKey(pw,salt){var km=await crypto.subtle.importKey('raw',new TextEncoder().encode(pw),'PBKDF2',false,['deriveKey']);
+  return crypto.subtle.deriveKey({name:'PBKDF2',salt:salt,iterations:SH.iter,hash:'SHA-256'},km,{name:'AES-GCM',length:256},false,['encrypt','decrypt'])}
+async function encBytes(u8,pw){var salt=crypto.getRandomValues(new Uint8Array(16)),iv=crypto.getRandomValues(new Uint8Array(12)),key=await deriveKey(pw,salt);
+  return cat(salt,iv,new Uint8Array(await crypto.subtle.encrypt({name:'AES-GCM',iv:iv},key,u8)))}
+async function decBytes(u8,pw){if(u8.length<45)throw new Error('bad');var key=await deriveKey(pw,u8.subarray(0,16));
+  return new Uint8Array(await crypto.subtle.decrypt({name:'AES-GCM',iv:u8.subarray(16,28)},key,u8.subarray(28)))}
+/* 受け取ったデータは信用せず、許可した項目だけを型・長さを確かめて作り直す */
+function cleanPlan(o){
+  if(!o||typeof o!=='object'||Array.isArray(o))throw new Error('bad');
+  function S(v,m){return typeof v==='string'?v.slice(0,m):''}
+  var ids={},nodes=[],edges=[],tids=TIERS.map(function(t){return t.id});
+  (Array.isArray(o.nodes)?o.nodes:[]).slice(0,40).forEach(function(n,i){
+    if(!n||typeof n!=='object')return;var id='n'+(i+1);if(typeof n.id==='string')ids[n.id]=id;
+    var pr=(typeof n.price==='number'&&isFinite(n.price)&&n.price>=0&&n.price<1e8)?Math.round(n.price):'';
+    nodes.push({id:id,tier:tids.indexOf(n.tier)>=0?n.tier:'STD',maker:S(n.maker,60),model:S(n.model,60),name:S(n.name,80),price:pr,point:S(n.point,400),photo:''})});
+  (Array.isArray(o.edges)?o.edges:[]).slice(0,80).forEach(function(g,i){
+    if(!g||typeof g!=='object'||!ids[g.from]||!ids[g.to])return;
+    edges.push({id:'e'+(edges.length+1),from:ids[g.from],to:ids[g.to],label:S(g.label,40),hearing:S(g.hearing,600),talk:S(g.talk,800)})});
+  var d=(o.design&&typeof o.design==='object')?o.design:{},nd={},sml=function(v){return v==='s'||v==='m'||v==='l'};
+  if(d.t&&typeof d.t==='object'){nd.t={};TKEYS.forEach(function(k){if(sml(d.t[k]))nd.t[k]=d.t[k]})}
+  if(sml(d.num))nd.num=d.num;if(sml(d.photo))nd.photo=d.photo;
+  if(d.paper==='a3'||d.paper==='a4')nd.paper=d.paper;
+  if(d.orient==='auto'||d.orient==='land'||d.orient==='port')nd.orient=d.orient;
+  if(d.res==='std'||d.res==='hi'||d.res==='max')nd.res=d.res;
+  if(/^#[0-9a-fA-F]{6}$/.test(d.price||''))nd.price=d.price;
+  if(d.c&&typeof d.c==='object'){nd.c={};['STD','MID','FLAG'].forEach(function(k){if(/^#[0-9a-fA-F]{6}$/.test(d.c[k]||''))nd.c[k]=d.c[k]})}
+  var out={id:uid('p'),title:S(o.title,80),period:S(o.period,60),store:S(o.store,60),author:S(o.author,40),aim:S(o.aim,400),nodes:nodes,edges:edges,
+    notes:S(o.notes,1500),acc:S(o.acc,1000),s4:S(o.s4,1000),accT:S(o.accT,20)||'付帯品',s4T:S(o.s4T,20)||'S4',updated:0};
+  if(Object.keys(nd).length)out.design=nd;
+  return out}
+async function shareBuild(plan,pw){
+  var raw=new TextEncoder().encode(JSON.stringify({v:1,p:cleanPlan(plan)})),z='n',data=raw;
+  if(window.CompressionStream){data=await pipeBytes(raw,new CompressionStream('deflate-raw'),SH.maxRaw);z='z'}
+  var e='p';if(pw){data=await encBytes(data,pw);e='e'}
+  return location.origin+location.pathname+'#s1.'+z+e+'.'+b64u(data)}
+function shareParse(h){var m=/^#s1\.([zn])([pe])\.([A-Za-z0-9_-]+)$/.exec(h||'');if(!m||h.length>SH.maxHash)return null;return {z:m[1],e:m[2],d:m[3]}}
+async function shareOpen(info,pw){
+  var u=unb64u(info.d);if(info.e==='e')u=await decBytes(u,pw);
+  if(info.z==='z'){if(!window.DecompressionStream)throw new Error('nodec');u=await pipeBytes(u,new DecompressionStream('deflate-raw'),SH.maxRaw)}
+  else if(u.length>SH.maxRaw)throw new Error('too big');
+  var j=JSON.parse(new TextDecoder().decode(u));if(!j||j.v!==1)throw new Error('ver');return cleanPlan(j.p)}
+function shClose(){$('#shov').hidden=true;$('#shbox').innerHTML=''}
+function shRender(h){$('#shbox').innerHTML=h;$('#shov').hidden=false;var f=$('#shbox').querySelector('input,textarea,button');if(f)f.focus()}
+function shareDialog(){
+  var p=st.cur;
+  shRender('<h2 id="shtitle">共有リンクを作る</h2>'+
+   '<p>「'+esc(p.title||'新しい作戦表')+'」の文章と設定を、リンクの中に入れます。<b>サーバーには保存されません。</b>写真はリンクに入りません。</p>'+
+   '<div class="warn">・リンクを知っている人は、中身を読めます（合言葉なしの場合）。<br>・一度送ったリンクは取り消せません。<br>・お客様の個人情報は入れないでください。</div>'+
+   '<label>合言葉（任意・8文字以上）<input type="text" id="shpw" autocomplete="off" spellcheck="false" placeholder="空欄なら合言葉なし"></label>'+
+   '<p style="color:var(--muted);font-size:12px">合言葉を付けると、知らない人はリンクを開いても読めません。合言葉は、リンクとは別の方法（口頭や別のメッセージ）で伝えてください。長めの文章がおすすめです。</p>'+
+   '<div class="row"><button class="btn pri" id="shmake">リンクを作る</button><button class="btn" id="shx">閉じる</button></div><div id="shout"></div>');
+  $('#shx').onclick=shClose;
+  $('#shmake').onclick=async function(){
+    var pw=$('#shpw').value,out=$('#shout');
+    if(pw&&pw.length<8){out.innerHTML='<p style="color:#B0102A">合言葉は8文字以上にしてください。</p>';return}
+    if(!(window.crypto&&crypto.subtle)){out.innerHTML='<p style="color:#B0102A">このブラウザでは作れません。別のブラウザをお試しください。</p>';return}
+    out.innerHTML='<p>作成中…</p>';
+    try{
+      var url=await shareBuild(st.cur,pw);
+      if(url.length>SH.maxHash)throw new Error('long');
+      out.innerHTML='<label>共有リンク<textarea id="shurl" readonly></textarea></label><div class="row"><button class="btn pri" id="shcopy">コピー</button></div><p id="shnote" style="color:var(--muted);font-size:12px"></p>';
+      var ta=$('#shurl');ta.value=url;
+      $('#shnote').textContent='長さ '+url.length.toLocaleString('ja-JP')+' 文字'+(pw?'（合言葉あり）':'（合言葉なし）')+(url.length>8000?'。長いため、一部のアプリではリンクが途中で切れることがあります。その場合はPDFや画像で共有してください。':'');
+      $('#shcopy').onclick=async function(){var ok=false;try{await navigator.clipboard.writeText(url);ok=true}catch(e){}if(!ok){ta.focus();ta.select();try{ok=document.execCommand('copy')}catch(e){}}$('#shnote').textContent=ok?'コピーしました。':'コピーできませんでした。上の文字を選んでコピーしてください。'};
+    }catch(e){out.innerHTML='<p style="color:#B0102A">'+(e&&e.message==='long'?'内容が多くてリンクにできません。文章を短くするか、PDFや画像で共有してください。':'リンクを作れませんでした。')+'</p>'}
+  };
+}
+function sharePreview(pl){return '<div class="shpv"><b>'+esc(pl.title||'(タイトルなし)')+'</b><br>'+esc([pl.period,pl.store,pl.author].filter(Boolean).join('　／　'))+'<br>機種 '+pl.nodes.length+' 件・コンサルの流れ '+pl.edges.length+' 件</div>'}
+function shareAccept(pl){
+  history.replaceState(null,'',location.pathname+location.search);shClose();
+  loadPlan(pl);st.dirty=true;st.touched=true;st.msg='共有された作戦表を開きました。「保存」を押すと、この端末に残ります。';renderBar();
+}
+function shareFail(msg){history.replaceState(null,'',location.pathname+location.search);
+  shRender('<h2 id="shtitle">共有リンクを開けませんでした</h2><p>'+esc(msg)+'</p><div class="row"><button class="btn pri" id="shx">閉じる</button></div>');$('#shx').onclick=shClose}
+async function handleShareHash(){
+  var h=location.hash;if(!h||h.indexOf('#s1.')!==0)return;
+  var info=shareParse(h);if(!info){shareFail('リンクが正しくないか、長すぎます。送り主に、もう一度リンクを作ってもらってください。');return}
+  var warn='<div class="warn">心当たりのない人から届いたリンクは、開かないでください。内容は文章として読み込まれるだけで、プログラムとしては動きません。あなたの保存済みの作戦表は書き換わりません。</div>';
+  async function tryOpen(pw){try{return await shareOpen(info,pw)}catch(e){
+    if(info.e==='e'&&e&&e.name==='OperationError')return 'pw';
+    if(e&&e.message==='nodec')throw new Error('このブラウザは古いため、開けません。ブラウザを更新してください。');
+    throw new Error('リンクの内容を読み込めませんでした。リンクが途中で切れていないか確認してください。')}}
+  try{
+    if(info.e==='e'){
+      shRender('<h2 id="shtitle">共有された作戦表（合言葉つき）</h2><p>送り主から聞いた合言葉を入力してください。</p>'+warn+'<label>合言葉<input type="password" id="shpw2" autocomplete="off"></label><p id="shmsg" style="color:#B0102A"></p><div class="row"><button class="btn pri" id="shok">開く</button><button class="btn" id="shx">閉じる</button></div>');
+      $('#shx').onclick=function(){history.replaceState(null,'',location.pathname+location.search);shClose()};
+      $('#shok').onclick=async function(){var pw=$('#shpw2').value;if(!pw)return;$('#shmsg').textContent='';
+        try{var r=await tryOpen(pw);if(r==='pw'){$('#shmsg').textContent='合言葉が違います。';return}
+          shRender('<h2 id="shtitle">共有された作戦表を開きますか？</h2>'+sharePreview(r)+warn+'<div class="row"><button class="btn pri" id="shgo">自分用にコピーして開く</button><button class="btn" id="shx">開かない</button></div>');
+          $('#shgo').onclick=function(){shareAccept(r)};$('#shx').onclick=function(){history.replaceState(null,'',location.pathname+location.search);shClose()}
+        }catch(e){shareFail(e.message)}};
+    }else{
+      var r=await tryOpen();
+      shRender('<h2 id="shtitle">共有された作戦表を開きますか？</h2>'+sharePreview(r)+warn+'<div class="row"><button class="btn pri" id="shgo">自分用にコピーして開く</button><button class="btn" id="shx">開かない</button></div>');
+      $('#shgo').onclick=function(){shareAccept(r)};$('#shx').onclick=function(){history.replaceState(null,'',location.pathname+location.search);shClose()};
+    }
+  }catch(e){shareFail(e.message||'リンクを開けませんでした。')}
+}
+window.addEventListener('hashchange',function(){if(STANDALONE)handleShareHash()});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!$('#shov').hidden)shClose()});
+
 /* ---------- events ---------- */
 function moveIn(arr,id,dir,same){
   var i=arr.findIndex(function(x){return x.id===id});if(i<0)return;
@@ -589,6 +710,7 @@ document.addEventListener('click',function(e){
   if(a==='del'){deletePlan();return}
   if(a==='pdf'){exportPdf();return}
   if(a==='img'){exportImg();return}
+  if(a==='share'){shareDialog();return}
   if(a==='nadd'){p.nodes.push({id:uid('n'),tier:b.dataset.t,maker:'',model:'',name:'',price:'',point:'',photo:''})}
   else if(a==='ndel'){p.nodes=p.nodes.filter(function(x){return x.id!==id});p.edges=p.edges.filter(function(x){return x.from!==id&&x.to!==id})}
   else if(a==='nup'){moveIn(p.nodes,id,-1,true)}
@@ -643,6 +765,7 @@ if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){sch
     plans=Object.keys(local).map(function(k){return local[k]});
     st.status='local';
     if(plans.length)loadPlan(plans.slice().sort(function(a,b){return (b.updated||0)-(a.updated||0)})[0]);else renderBar();
+    if(STANDALONE)handleShareHash();
     return;
   }
   st.status='wait';renderBar();
