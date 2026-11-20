@@ -53,6 +53,53 @@ label{display:flex;flex-direction:column;gap:3px;font-size:12px;color:var(--mute
 .tnb{display:flex;gap:6px;align-items:flex-end}
 .tnb .ord select{padding:6px 8px}
 @media (max-width:520px){.tnrow{grid-template-columns:auto 1fr}.tnrow label:nth-of-type(2),.tnb{grid-column:1/-1}}
+.modebar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:2px 2px 4px}
+.modebar .mt{font-size:12px;color:var(--muted);font-weight:600}
+.modebar .seg .btn{padding:6px 14px;font-weight:600}
+.ezprog{position:sticky;top:0;z-index:5;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:9px}
+.ezprog .eztop{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.ezprog .ezno{font-size:13px;font-weight:700;color:var(--muted)}
+.ezprog .eztt{font-size:19px;font-weight:800}
+.eztrack{height:12px;border-radius:99px;background:var(--line);overflow:hidden}
+.ezfill{height:100%;background:var(--accent);border-radius:99px;transition:width .25s}
+.ezdots{display:flex;gap:6px;flex-wrap:wrap}
+.ezdot{width:30px;height:30px;border-radius:50%;border:2px solid var(--line);background:var(--bg);color:var(--muted);font-weight:700;font-size:13px;padding:0;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.ezdot.done{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.ezdot[aria-current="step"]{border-color:var(--ink);color:var(--ink);box-shadow:0 0 0 3px var(--bg),0 0 0 5px var(--ink)}
+.ezdot.done[aria-current="step"]{color:var(--accent-ink)}
+.ez{font-size:16px}
+.ez .ezlead{font-size:15px;line-height:1.8;margin:0;color:var(--ink)}
+.ez .ezeg{font-size:13.5px;line-height:1.7;background:var(--bg);border-left:4px solid var(--accent);border-radius:4px;padding:6px 10px;margin:0;color:var(--muted)}
+.ez label{font-size:15px;font-weight:700;gap:5px}
+.ez input,.ez textarea,.ez select{font-size:17px;padding:12px 12px;border-radius:8px;font-weight:500}
+.ez .form{grid-template-columns:1fr}
+.ez .item{padding:12px;gap:10px}
+.ez .ezsec{font-size:16px;font-weight:800;padding:6px 10px;border-radius:8px;display:inline-block}
+.eznav{display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+.eznav .btn{font-size:17px;font-weight:700;padding:12px 22px;min-height:50px}
+.ezsum{display:flex;flex-direction:column;gap:6px}
+.ezsum .r{display:flex;gap:8px;align-items:flex-start;font-size:15px;line-height:1.6}
+.ezsum .ok{color:#17803D;font-weight:800}.ezsum .ng{color:#B45309;font-weight:800}
+.ezfin{display:flex;gap:8px;flex-wrap:wrap}
+.ezfin .btn{font-size:16px;font-weight:700;padding:12px 18px;min-height:48px}
+
+.efl{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:14px;font-weight:700}
+.efl .ch{display:inline-flex;align-items:center;gap:6px;border-radius:8px;padding:4px 10px;background:var(--c);color:var(--t)}
+.efl .ch small{font-weight:600;opacity:.9}
+.efl .ar{font-size:20px;color:var(--ink)}
+.efl .wn{color:#B45309}
+.epick{display:flex;flex-direction:column;gap:6px}
+.epk{display:flex;align-items:center;gap:10px;text-align:left;border:2px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--bg);color:var(--ink);font:inherit;font-size:16px;font-weight:600;cursor:pointer;white-space:normal;width:100%}
+.epk .tg{flex:none;border-radius:6px;padding:2px 8px;font-size:12px;font-weight:800;background:var(--c);color:var(--t)}
+.epk .ck{margin-left:auto;font-weight:800;opacity:0}
+.epk[aria-pressed="true"]{border-color:var(--c);background:var(--c);color:var(--t)}
+.epk[aria-pressed="true"] .tg{background:var(--t);color:var(--c)}
+.epk[aria-pressed="true"] .ck{opacity:1}
+.ezarrow{text-align:center;font-size:15px;font-weight:700;color:var(--muted);line-height:1.4}
+.ezarrow b{display:block;font-size:30px;color:var(--ink);line-height:1}
+.ezq{font-size:16px;font-weight:800;display:flex;gap:8px;align-items:center}
+.ezq i{font-style:normal;width:26px;height:26px;border-radius:50%;background:var(--ink);color:var(--bg);display:flex;align-items:center;justify-content:center;font-size:14px;flex:none}
+
 .shov{position:fixed;inset:0;background:rgba(10,15,25,.55);display:flex;align-items:center;justify-content:center;padding:16px;z-index:50}
 .shov[hidden]{display:none}
 .shbox{background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:14px;max-width:560px;width:100%;max-height:92vh;overflow:auto;padding:18px 20px;box-shadow:0 10px 40px rgba(0,0,0,.35)}
@@ -72,7 +119,9 @@ label{display:flex;flex-direction:column;gap:3px;font-size:12px;color:var(--mute
 .panes[data-pane="view"] .ed{display:none}
 @media (max-width:999px){.tabs{display:flex}}
 @media (min-width:1000px){
-  .panes{grid-template-columns:minmax(380px,460px) minmax(0,1fr)}
+  .panes{grid-template-columns:minmax(0,1fr) minmax(380px,460px)}
+  .pv{grid-column:1;grid-row:1}
+  .ed{grid-column:2;grid-row:1}
   .panes[data-pane] .pv,.panes[data-pane] .ed{display:flex}
   .pv{position:sticky;top:8px}
 }
@@ -186,7 +235,7 @@ summary h2{display:inline}
 <body>
 <div class="top">
   <div class="bar">
-    <h1>戦略メーカー <button type="button" data-act="ver" id="verbtn" title="更新履歴を見る" style="font:inherit;font-size:12px;font-weight:600;color:var(--muted);background:none;border:1px solid var(--line);border-radius:999px;padding:1px 8px;vertical-align:middle;cursor:pointer">Ver.2.4</button></h1>
+    <h1>戦略メーカー <button type="button" data-act="ver" id="verbtn" title="更新履歴を見る" style="font:inherit;font-size:12px;font-weight:600;color:var(--muted);background:none;border:1px solid var(--line);border-radius:999px;padding:1px 8px;vertical-align:middle;cursor:pointer">Ver.2.7</button></h1>
     <span class="sp"></span>
     <button class="btn" data-act="newplan">新規</button>
     <button class="btn" data-act="sample">サンプル</button>
@@ -216,7 +265,7 @@ var TIERS=[
 ];
 var KEYL='tv43plans-v3';
 var db=null,dlcap=null,plans=[],local={};
-var st={cur:null,pane:'edit',dirty:false,status:'local',canWrite:null,msg:'',err:'',busy:false,touched:false,saved:false};
+var st={mode:(function(){try{return localStorage.getItem('sm_mode')==='full'?'full':'easy'}catch(e){return 'easy'}})(),step:0,cur:null,pane:'edit',dirty:false,status:'local',canWrite:null,msg:'',err:'',busy:false,touched:false,saved:false};
 
 function $(s){return document.querySelector(s)}
 function esc(t){return String(t==null?'':t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
@@ -624,16 +673,115 @@ function edgeCard(e,i){
   var step=a&&b&&stepOf(a.tier,b.tier,p);
   return '<div class="item"><div class="ihead"><span class="chip" style="background:var(--ink);color:var(--bg)">'+(i+1)+'</span><span class="sp"></span>'+
    '<button class="btn sm" data-act="eup" data-id="'+e.id+'" aria-label="上へ">↑</button><button class="btn sm" data-act="edown" data-id="'+e.id+'" aria-label="下へ">↓</button><button class="btn sm" data-act="edel" data-id="'+e.id+'" aria-label="削除">削除</button></div>'+
-   '<div class="form"><label>どの機種から<select data-eid="'+e.id+'" data-f="from">'+opt(e.from)+'</select></label>'+
-   '<label>どの機種へ<select data-eid="'+e.id+'" data-f="to">'+opt(e.to)+'</select></label>'+
+   edgeSum(e)+'<div class="form"><label>どの機種から（出発）<select data-eid="'+e.id+'" data-f="from">'+opt(e.from)+'</select></label>'+
+   '<label>どの機種へ（行き先）<select data-eid="'+e.id+'" data-f="to">'+opt(e.to)+'</select></label>'+
    '<label class="wide">きっかけ（矢印に出る一言・24文字まで）<input maxlength="24" data-eid="'+e.id+'" data-f="label" value="'+esc(e.label)+'"></label>'+
    '<label class="wide">一言の表示位置<select data-eid="'+e.id+'" data-f="lp">'+[['0','おまかせ（見やすい場所）'],['1','出発の機種の近く'],['2','矢印の中ほど'],['3','到着の機種の近く']].map(function(o){return '<option value="'+o[0]+'"'+(String(e.lp||0)===o[0]?' selected':'')+'>'+o[1]+'</option>'}).join('')+'</select></label>'+
    '<label class="wide">'+(step?'ステップアップのヒアリングトーク（'+esc(tnOf(a.tier).name)+'→'+esc(tnOf(b.tier).name)+'）':'ヒアリングトーク')+'<span class="hint">お客様に聞くこと。1行に1つ書きます。</span><textarea rows="3" data-eid="'+e.id+'" data-f="hearing" placeholder="例）ふだん動画は何で見ますか？">'+esc(e.hearing)+'</textarea></label>'+
    '<label class="wide">コンサルのしかた<textarea rows="3" data-eid="'+e.id+'" data-f="talk">'+esc(e.talk)+'</textarea></label></div></div>';
 }
+
+/* ===== かんたん版（順番に進める入力） ===== */
+function modeBar(){
+  return '<div class="modebar"><span class="mt">入力のしかた</span><div class="seg" role="group">'+
+   '<button class="btn" data-act="mode" data-v="easy" aria-pressed="'+(st.mode==='easy')+'">かんたん版</button>'+
+   '<button class="btn" data-act="mode" data-v="full" aria-pressed="'+(st.mode!=='easy')+'">くわしい版</button></div></div>'}
+var EZ_TIER_TXT={STD:'お客様が最初に立ち止まる、入口の機種です。',MID:'少し上のモデルへ、話を進めるための機種です。',FLAG:'最後におすすめしたい、ゴールの機種です。'};
+function ezNode(n){
+  var D=function(f,v){return 'data-nid="'+n.id+'" data-f="'+f+'" value="'+esc(v)+'"'};
+  return '<div class="item"><div class="form">'+
+   '<label>メーカー<input list="makers" placeholder="例）シャープ" '+D('maker',n.maker)+'></label>'+
+   '<label>型番<input placeholder="例）AQ-43S1" '+D('model',n.model)+'></label>'+
+   '<label>価格（税込・円）<input type="number" inputmode="numeric" placeholder="例）54800" '+D('price',n.price)+'></label>'+
+   '<label>特徴（ひとこと）<input placeholder="例）43型 4K 標準" '+D('name',n.name)+'></label>'+
+   '<label>この機種で伝えること<textarea rows="2" placeholder="例）まず大画面の価格で足を止める。" data-nid="'+n.id+'" data-f="point">'+esc(n.point)+'</textarea></label></div>'+
+   '<div><button class="btn" data-act="ndel" data-id="'+n.id+'">この機種を消す</button></div></div>'}
+function nodeById(id){return st.cur.nodes.filter(function(n){return n.id===id})[0]}
+function edgeSum(e){
+  var a=nodeById(e.from),b=nodeById(e.to);if(!a||!b)return '';
+  var chip=function(n){var u=tier(n.tier);return '<span class="ch" style="--c:'+u.color+';--t:'+u.text+'">'+esc(u.name)+' <small>'+esc(n.model||n.name||'（未入力）')+'</small></span>'};
+  return '<div class="efl">'+chip(a)+'<span class="ar">➜</span>'+chip(b)+(a===b?'<span class="wn">出発と行き先が同じです</span>':'')+'</div>'}
+function ezPick(e,f){
+  var p=st.cur;
+  return '<div class="epick" role="group">'+p.nodes.map(function(n){var u=tier(n.tier),on=e[f]===n.id;
+    return '<button type="button" class="epk" data-act="epick" data-id="'+e.id+'" data-f="'+f+'" data-v="'+n.id+'" aria-pressed="'+on+'" style="--c:'+u.color+';--t:'+u.text+'"><span class="tg">'+esc(u.name)+'</span><span>'+esc((n.maker?n.maker+' ':'')+(n.model||n.name||'（型番未入力）'))+'</span><span class="ck">✓ えらびました</span></button>'}).join('')+'</div>'}
+function ezEdge(e,i){
+  return '<div class="item"><b style="font-size:16px">進め方 '+(i+1)+'</b>'+edgeSum(e)+
+   '<div class="ezq"><i>1</i>どの機種から？<span class="hint" style="font-weight:500">（いま説明している機種）</span></div>'+ezPick(e,'from')+
+   '<div class="ezarrow">お客様が、こう言ったら<b>▼</b></div>'+
+   '<div class="form"><label>きっかけ（お客様の言葉・24文字まで）<input maxlength="24" placeholder="例）ゲームをする" data-eid="'+e.id+'" data-f="label" value="'+esc(e.label)+'"></label></div>'+
+   '<div class="ezarrow">次は、この機種をすすめる<b>▼</b></div>'+
+   '<div class="ezq"><i>2</i>どの機種へ？<span class="hint" style="font-weight:500">（次におすすめする機種）</span></div>'+ezPick(e,'to')+
+   '<div class="form">'+
+   '<label>お客様にたずねること<textarea rows="2" placeholder="例）ふだん動画は何で見ますか？" data-eid="'+e.id+'" data-f="hearing">'+esc(e.hearing)+'</textarea></label>'+
+   '<label>すすめ方<textarea rows="2" placeholder="例）画質の違いを実機で比べてもらう。" data-eid="'+e.id+'" data-f="talk">'+esc(e.talk)+'</textarea></label></div>'+
+   '<div><button class="btn" data-act="edel" data-id="'+e.id+'">この進め方を消す</button></div></div>'}
+function ezEdgeOld(e,i){
+  var p=st.cur,opt=function(sel){return p.nodes.map(function(n){return '<option value="'+n.id+'"'+(n.id===sel?' selected':'')+'>'+esc(nlabel(n))+'</option>'}).join('')};
+  return '<div class="item"><b>進め方 '+(i+1)+'</b><div class="form">'+
+   '<label>どの機種から<select data-eid="'+e.id+'" data-f="from">'+opt(e.from)+'</select></label>'+
+   '<label>どの機種へ<select data-eid="'+e.id+'" data-f="to">'+opt(e.to)+'</select></label>'+
+   '<label>きっかけ（お客様の言葉・24文字まで）<input maxlength="24" placeholder="例）ゲームをする" data-eid="'+e.id+'" data-f="label" value="'+esc(e.label)+'"></label>'+
+   '<label>お客様にたずねること<textarea rows="2" placeholder="例）ふだん動画は何で見ますか？" data-eid="'+e.id+'" data-f="hearing">'+esc(e.hearing)+'</textarea></label>'+
+   '<label>すすめ方<textarea rows="2" placeholder="例）画質の違いを実機で比べてもらう。" data-eid="'+e.id+'" data-f="talk">'+esc(e.talk)+'</textarea></label></div>'+
+   '<div><button class="btn" data-act="edel" data-id="'+e.id+'">この進め方を消す</button></div></div>'}
+function easySteps(){
+  var p=st.cur,A=[];
+  A.push({t:'部門をえらぶ',done:function(){return !!p.dept},body:function(){return '<p class="ezlead">どの部門の作戦表ですか？ えらぶと、シートの色が部門の色になります。</p>'+deptPick()+'<p class="ezeg">わからないときは「標準」のままで大丈夫です。</p>'}});
+  A.push({t:'タイトルと日にち',done:function(){return !!(p.title&&p.period)},body:function(){return '<p class="ezlead">作戦表の名前と、いつの作戦かを書きます。</p><div class="form">'+
+    '<label>タイトル<input placeholder="例）43型 週末コンサル作戦" data-k="title" value="'+esc(p.title)+'"></label>'+
+    '<label>対象日<input placeholder="例）11/21(土)・11/22(日)" data-k="period" value="'+esc(p.period)+'"></label>'+
+    '<label>店舗<input placeholder="例）駅前店" data-k="store" value="'+esc(p.store)+'"></label>'+
+    '<label>作成者<input placeholder="例）店長" data-k="author" value="'+esc(p.author)+'"></label></div>'}});
+  A.push({t:'今週の狙い',done:function(){return !!p.aim},body:function(){return '<p class="ezlead">今週、いちばん大事にしたいことを、ひとことで書きましょう。</p>'+
+    '<label style="font-weight:700;font-size:15px;display:flex;flex-direction:column;gap:5px">今週の狙い<textarea rows="4" placeholder="例）安さで入り、使い方で上げる。ゲーム・映画の相談はFLAGへ。" data-k="aim">'+esc(p.aim)+'</textarea></label>'}});
+  tierList(p).forEach(function(t){
+    var u=tier(t.id);
+    A.push({t:u.name+'の機種',done:function(){return p.nodes.some(function(n){return n.tier===t.id&&(n.model||n.name||n.maker)})},body:function(){
+      var ns=p.nodes.filter(function(n){return n.tier===t.id});
+      return '<span class="ezsec" style="background:'+u.color+';color:'+u.text+'">'+esc(u.name)+(u.sub?'　'+esc(u.sub):'')+'</span>'+
+       '<p class="ezlead">'+(EZ_TIER_TXT[t.id]||'この段に置く機種を入れましょう。')+'</p>'+
+       (ns.length?ns.map(ezNode).join(''):'<p class="ezeg">まだ機種が入っていません。下のボタンを押してください。</p>')+
+       '<div><button class="btn pri" data-act="nadd" data-t="'+t.id+'" style="font-size:17px;font-weight:700;padding:12px 20px;min-height:50px">＋ '+esc(u.name)+'の機種を入れる</button></div>'+
+       '<p class="ezeg">使わない段は、空のまま「つぎへ」で大丈夫です。</p>'}})});
+  A.push({t:'進め方（矢印）',done:function(){return p.edges.length>0},body:function(){
+    return '<p class="ezlead">お客様の反応に合わせて、「どの機種から、どの機種へ」進めるかを決めます。ここで書いたものが、シートの矢印になります。</p>'+
+     '<p class="ezeg">例）「ゲームをする」と言われたら → STDの機種から、FLAGの機種へ</p>'+
+     (p.nodes.length<2?'<p class="ezeg" style="border-left-color:#B45309">先に、機種を2つ以上入れてください（前のステップに戻れます）。</p>':
+      (p.edges.length?p.edges.map(ezEdge).join(''):'<p class="ezeg">まだ進め方がありません。下のボタンを押してください。</p>'))+
+     '<div><button class="btn pri" data-act="eadd"'+(p.nodes.length<2?' disabled':'')+' style="font-size:17px;font-weight:700;padding:12px 20px;min-height:50px">＋ 進め方を入れる</button></div>'}});
+  A.push({t:'注意点',done:function(){return !!p.notes},body:function(){return '<p class="ezlead">スタッフみんなに伝えたい注意点があれば書きます。なければ空のままで大丈夫です。</p>'+
+    '<label style="font-weight:700;font-size:15px;display:flex;flex-direction:column;gap:5px">注意点・共有事項<textarea rows="5" placeholder="例）FLAGの値引きは店長承認。延長保証5年を必ず一言添える。" data-k="notes">'+esc(p.notes)+'</textarea></label>'}});
+  A.push({t:'付帯品とS4',done:function(){return !!(p.acc||p.s4)},body:function(){return '<p class="ezlead">コンサルのときに、あわせて力を入れることを書きます。<b>1行に1つ</b>ずつ書いてください。</p>'+
+    '<label style="font-weight:700;font-size:15px;display:flex;flex-direction:column;gap:5px">'+esc(p.accT||'付帯品')+'<textarea rows="4" placeholder="例）HDMIケーブル\nテレビ台" data-k="acc">'+esc(p.acc)+'</textarea></label>'+
+    '<label style="font-weight:700;font-size:15px;display:flex;flex-direction:column;gap:5px">'+esc(p.s4T||'S4')+'<textarea rows="4" placeholder="例）延長保証\n配送設置" data-k="s4">'+esc(p.s4)+'</textarea></label>'}});
+  A.push({t:'できあがり',fin:true,done:function(){return false},body:function(){
+    var rows=[[!!p.title,'タイトル'],[!!p.aim,'今週の狙い'],[p.nodes.length>0,'機種（'+p.nodes.length+'件）'],[p.edges.length>0,'進め方・矢印（'+p.edges.length+'本）']];
+    return '<p class="ezlead">おつかれさまでした！ 内容を確認して、<b>まず保存</b>してから、共有や出力をしましょう。</p><div class="ezsum">'+
+     rows.map(function(r){return '<div class="r"><span class="'+(r[0]?'ok':'ng')+'">'+(r[0]?'✓':'！')+'</span><span>'+r[1]+(r[0]?'':'：まだ入っていません')+'</span></div>'}).join('')+'</div>'+
+     '<p class="ezeg">右（スマホは上の「プレビュー」）に、できあがりの見た目が出ています。</p>'+
+     '<div class="ezfin"><button class="btn pri" data-act="save">保存する</button><button class="btn pri" data-act="share" style="background:var(--ink);border-color:var(--ink);color:var(--bg)">共有する</button><button class="btn" data-act="pane" data-p="view">プレビューで見る</button><button class="btn" data-act="pdf">PDFを出力</button><button class="btn" data-act="img">画像を出力</button></div>'+
+     '<p class="ezeg">もっと細かく直したいときは、上の「くわしい版」に切り替えると、文字の大きさや色、写真なども設定できます。</p>'}});
+  return A;
+}
+function renderEasy(){
+  var A=easySteps(),n=A.length;if(st.step==null||st.step<0)st.step=0;if(st.step>=n)st.step=n-1;
+  var i=st.step,S=A[i],pct=Math.round((i+1)/n*100);
+  $('#ed').innerHTML=modeBar()+
+   '<div class="ez" style="display:flex;flex-direction:column;gap:12px">'+
+   '<div class="ezprog"><div class="eztop"><span class="ezno">ステップ '+(i+1)+' / '+n+'</span><span class="eztt">'+esc(S.t)+'</span></div>'+
+   '<div class="eztrack" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+pct+'" aria-label="進み具合"><div class="ezfill" style="width:'+pct+'%"></div></div>'+
+   '<div class="ezdots">'+A.map(function(s2,k){var d=!s2.fin&&s2.done();return '<button class="ezdot'+(d?' done':'')+'" data-act="estep" data-v="'+k+'"'+(k===i?' aria-current="step"':'')+' aria-label="'+(k+1)+' '+esc(s2.t)+(d?'（入力済み）':'')+'">'+(d?'✓':(k+1))+'</button>'}).join('')+'</div></div>'+
+   '<section class="card">'+S.body()+'</section>'+
+   '<div class="eznav"><button class="btn" data-act="estep" data-v="prev"'+(i===0?' disabled':'')+'>← もどる</button>'+(S.fin?'':'<button class="btn pri" data-act="estep" data-v="next">つぎへ →</button>')+'</div></div>';
+}
 function renderEditor(){
+  if(st.mode==='easy'){renderEasy();return}
+  renderFull();
+}
+function renderFull(){
   var p=st.cur,d=function(k,v){return 'data-k="'+k+'" value="'+esc(v)+'"'};
-  $('#ed').innerHTML=
+  $('#ed').innerHTML=modeBar()+
   '<section class="card"><h2>基本情報</h2><div class="form">'+deptPick()+
    '<label class="wide">タイトル<input '+d('title',p.title)+'></label>'+
    '<label>対象日<input '+d('period',p.period)+'></label><label>店舗<input '+d('store',p.store)+'></label>'+
@@ -692,16 +840,24 @@ function renderBar(){
   $('#status').innerHTML='<span class="dot '+m[0]+'"></span>'+m[1]+(st.dirty?' / 未保存の変更があります':'')+
    (st.canWrite===false?' / 閲覧のみ（保存できません）':'')+(st.msg?' / '+esc(st.msg):'')+(st.err?' <span class="err">'+esc(st.err)+'</span>':'');
 }
+function guardLeave(go,revert){
+  if(!(st.dirty&&st.touched)){go();return}
+  shRender('<h2 id="shtitle">保存していない変更があります</h2><p>このまま移ると、いま書いた内容は消えてしまいます。</p>'+
+   '<div class="row"><button class="btn pri" id="gvs">保存してから移る</button><button class="btn" id="gvn">保存しないで移る</button><button class="btn" id="gvc">やめる（このまま続ける）</button></div>');
+  $('#gvc').onclick=function(){shClose();if(revert)revert()};
+  $('#gvn').onclick=function(){shClose();go()};
+  $('#gvs').onclick=function(){savePlan().then(function(){shClose();go()},function(){shClose();if(revert)revert()})};
+}
 function loadPlan(p){st.cur=clone(p);st.dirty=false;st.msg='';st.err='';renderEditor();renderPreview();renderBar()}
 function persistLocal(){try{localStorage.setItem(KEYL,JSON.stringify(local))}catch(e){}}
 function savePlan(){
-  if(!canSave())return;
+  if(!canSave())return Promise.resolve();
   var p=clone(st.cur);p.updated=Date.now();st.cur.updated=p.updated;st.err='';
-  if(db&&new Blob([JSON.stringify(p)]).size>250*1024){st.err='データが大きすぎて共有保存できません。写真の数を減らしてください。';renderBar();return}
+  if(db&&new Blob([JSON.stringify(p)]).size>250*1024){st.err='データが大きすぎて共有保存できません。写真の数を減らしてください。';renderBar();return Promise.reject()}
   if(db){
-    db.doc('plans/'+p.id).set(p).then(function(){st.dirty=false;st.msg='保存しました';renderBar()}).catch(function(e){st.err='保存できませんでした（'+((e&&e.code)||'error')+'）';renderBar()});
+    return db.doc('plans/'+p.id).set(p).then(function(){st.dirty=false;st.msg='保存しました';renderBar()},function(e){st.err='保存できませんでした（'+((e&&e.code)||'error')+'）';renderBar();return Promise.reject(e)});
   }else{
-    local[p.id]=p;plans=Object.keys(local).map(function(k){return local[k]});persistLocal();st.dirty=false;st.msg='保存しました';renderBar();
+    local[p.id]=p;plans=Object.keys(local).map(function(k){return local[k]});persistLocal();st.dirty=false;st.msg='保存しました';renderBar();return Promise.resolve();
   }
 }
 function deletePlan(){
@@ -825,11 +981,17 @@ async function shareOpen(info,pw){
   var j=JSON.parse(new TextDecoder().decode(u));if(!j||j.v!==1)throw new Error('ver');return cleanPlan(j.p)}
 function shClose(){$('#shov').hidden=true;$('#shbox').innerHTML=''}
 function shRender(h){$('#shbox').innerHTML=h;$('#shov').hidden=false;var f=$('#shbox').querySelector('input,textarea,button');if(f)f.focus()}
-var VERSION='2.4',CHANGELOG=[["2.4", "2026年11月", "コメント表示の改良", ["きっかけコメントを矢印の線の途中に埋め込む表示に変更（━━ ① 配信を見る ━━▶）", "コメントを、さりげない細い四角枠で囲む（色は行き先の段の色）", "直線が短くて入らないときは、線のすぐ脇に置く", "矢印ごとに「一言の表示位置」（おまかせ／出発の近く／中ほど／到着の近く）を選べる", "更新履歴の表示と、シート下部へのバージョン表記を追加"]], ["2.3", "2026年11月", "自動レイアウトの刷新（矢印）", ["矢印の経路を、機種を避けて直角に進む経路探索方式に全面刷新", "他の矢印と18px以上離して引き、平行して重ならないようにした", "曲がりが少ない経路を選び、近い矢印から先に引く", "矢印を実線のみに統一し、線を太く・矢じりを大きくした", "機種どうしの縦の間隔を広げ、矢印の通り道を確保"]], ["2.2", "2026年11月", "同じ順番の段を縦に並べる", ["「順番」が同じ段は、同じ列に縦に並ぶ", "同じ列の段は、共通の見出しにまとめず、段ごとに色付きの見出しと枠で表示", "ステップアップのヒアリングの判定を、順番の数字ベースに変更"]], ["2.1", "2026年11月", "段の順番を数字で選べるように", ["各段に「順番」（1〜6）を設定でき、1が一番左になる", "矢印が重なって見えなくなる問題の修正（縦線を通路ごとに割り当て）", "同じ段を結ぶ矢印、段を飛ばす矢印の通り道を整理"]], ["2.0", "2026年11月", "部門テーマとコンサル先の追加", ["部門（季節AV／家電／情報／通信）を選ぶと、背景色とデザインがその部門のシートに切り替わる", "コンサル先の段を追加できる（初期は STD / MID / FLAG、最大6つ）", "段の名前・補足・色を編集でき、不要な段は削除できる", "書き出すファイル名の先頭に部門名を付ける"]], ["1.2", "2026年11月", "リンクで共有", ["作戦表をリンクにして共有する機能（サーバー保存なし、リンク内にデータを格納）", "合言葉（8文字以上）による暗号化に対応（任意）", "受け取り側に確認画面を表示し、不正なデータは読み込まない安全対策", "写真はリンクに含めない"]], ["1.1", "2026年11月", "画像出力と高解像度出力", ["PDFに加えて、PNG画像で出力できるようにした", "解像度（標準／高／最高）を選べ、拡大しても文字がつぶれにくい", "端末ごとの上限に合わせて、解像度を自動で調整", "README（PDF／Markdown）と、図入りの使い方ガイドを作成"]], ["1.0", "2026年11月", "初版公開（GitHub Pages）", ["作戦のフロー図（STD／MID／FLAG の3段、矢印、段を飛ばす流れ）", "機種カード（メーカー＝型番／価格／特徴／伝えること／写真）", "コンサルトーク（ヒアリングとコンサルのしかた）を1ページ目に掲載", "今週の狙い・注意点を大きな文字で表示し、タイトルを最大の文字に", "コンサルトーク下に「付帯品（左）」「S4（右）」の箇条書き枠を追加", "A4／A3、横／縦、文字サイズの詳細設定、保存、PDF出力", "サイト名を「戦略メーカー」、公開URLを sennryakumaker に変更", "※ 色の再設計は取りやめ、以前の配色に戻して公開"]]];
+var VERSION='2.7',CHANGELOG=[["2.7", "2026年11月", "横画面での配置", ["横画面（幅1000px以上）では、プレビューを左、入力項目を右に表示するよう変更", "縦画面・スマホは従来どおり（「作成」「プレビュー」のタブ切り替え）"]], ["2.6", "2026年11月", "分かりやすさと安全性の改善", ["「どの機種から、どの機種へ」を、タップして選ぶ大きなボタン式に変更（かんたん版）。①出発 → きっかけ → ②行き先の順で、矢印の向きが分かる", "「STD 機種名 ➜ MID 機種名」の色付きの要約を、各進め方の上に表示（くわしい版にも表示）。出発と行き先が同じときは注意を表示", "保存していない変更があるままページを閉じる・移動するとき、確認のポップアップを表示", "「新規」「サンプル」「保存した作戦表の切り替え」の前にも、保存の確認画面を表示（保存して移る／保存しないで移る／やめる）", "かんたん版の最後に「共有する」ボタンを追加（公開版はリンク共有、Claude版はPDF・画像出力と共有メニューの案内）"]], ["2.5", "2026年11月", "かんたん版の入力（順番に進める）", ["作成画面に「かんたん版」と「くわしい版」の切り替えを追加（かんたん版が初期、選んだ方は次回も保持）", "かんたん版：1画面に1つずつ、順番に入力する形式（部門→タイトル→今週の狙い→各段の機種→進め方（矢印）→注意点→付帯品とS4→できあがり）", "進み具合を示す進捗バーと、ステップ番号（入力済みはチェック印、押すと移動）を表示", "文字・入力欄を大きくし、書き方の例（例）…）をやさしい言葉で表示", "最後の画面で入力漏れを確認し、保存・プレビュー・PDF・画像出力へ進める", "くわしい版は従来どおり（文字サイズ・色・写真・段の編集など）"]], ["2.4", "2026年11月", "コメント表示の改良", ["きっかけコメントを矢印の線の途中に埋め込む表示に変更（━━ ① 配信を見る ━━▶）", "コメントを、さりげない細い四角枠で囲む（色は行き先の段の色）", "直線が短くて入らないときは、線のすぐ脇に置く", "矢印ごとに「一言の表示位置」（おまかせ／出発の近く／中ほど／到着の近く）を選べる", "更新履歴の表示と、シート下部へのバージョン表記を追加"]], ["2.3", "2026年11月", "自動レイアウトの刷新（矢印）", ["矢印の経路を、機種を避けて直角に進む経路探索方式に全面刷新", "他の矢印と18px以上離して引き、平行して重ならないようにした", "曲がりが少ない経路を選び、近い矢印から先に引く", "矢印を実線のみに統一し、線を太く・矢じりを大きくした", "機種どうしの縦の間隔を広げ、矢印の通り道を確保"]], ["2.2", "2026年11月", "同じ順番の段を縦に並べる", ["「順番」が同じ段は、同じ列に縦に並ぶ", "同じ列の段は、共通の見出しにまとめず、段ごとに色付きの見出しと枠で表示", "ステップアップのヒアリングの判定を、順番の数字ベースに変更"]], ["2.1", "2026年11月", "段の順番を数字で選べるように", ["各段に「順番」（1〜6）を設定でき、1が一番左になる", "矢印が重なって見えなくなる問題の修正（縦線を通路ごとに割り当て）", "同じ段を結ぶ矢印、段を飛ばす矢印の通り道を整理"]], ["2.0", "2026年11月", "部門テーマとコンサル先の追加", ["部門（季節AV／家電／情報／通信）を選ぶと、背景色とデザインがその部門のシートに切り替わる", "コンサル先の段を追加できる（初期は STD / MID / FLAG、最大6つ）", "段の名前・補足・色を編集でき、不要な段は削除できる", "書き出すファイル名の先頭に部門名を付ける"]], ["1.2", "2026年11月", "リンクで共有", ["作戦表をリンクにして共有する機能（サーバー保存なし、リンク内にデータを格納）", "合言葉（8文字以上）による暗号化に対応（任意）", "受け取り側に確認画面を表示し、不正なデータは読み込まない安全対策", "写真はリンクに含めない"]], ["1.1", "2026年11月", "画像出力と高解像度出力", ["PDFに加えて、PNG画像で出力できるようにした", "解像度（標準／高／最高）を選べ、拡大しても文字がつぶれにくい", "端末ごとの上限に合わせて、解像度を自動で調整", "README（PDF／Markdown）と、図入りの使い方ガイドを作成"]], ["1.0", "2026年11月", "初版公開（GitHub Pages）", ["作戦のフロー図（STD／MID／FLAG の3段、矢印、段を飛ばす流れ）", "機種カード（メーカー＝型番／価格／特徴／伝えること／写真）", "コンサルトーク（ヒアリングとコンサルのしかた）を1ページ目に掲載", "今週の狙い・注意点を大きな文字で表示し、タイトルを最大の文字に", "コンサルトーク下に「付帯品（左）」「S4（右）」の箇条書き枠を追加", "A4／A3、横／縦、文字サイズの詳細設定、保存、PDF出力", "サイト名を「戦略メーカー」、公開URLを sennryakumaker に変更", "※ 色の再設計は取りやめ、以前の配色に戻して公開"]]];
 function verDialog(){
   shRender('<h2 id="shtitle">更新履歴　<small style="font-weight:500;color:var(--muted)">いまは Ver.'+VERSION+'</small></h2>'+
    CHANGELOG.map(function(v){return '<div class="warn" style="margin:10px 0"><b>Ver.'+esc(v[0])+'</b>　'+esc(v[2])+' <span style="color:var(--muted)">（'+esc(v[1])+'）</span><ul style="margin:4px 0 0;padding-left:1.2em">'+v[3].map(function(x){return '<li>'+esc(x)+'</li>'}).join('')+'</ul></div>'}).join('')+
    '<div class="row"><button class="btn" id="shx">閉じる</button></div>');
+  $('#shx').onclick=shClose;
+}
+function shareHelp(){
+  shRender('<h2 id="shtitle">作戦表を共有する</h2><p>この表示（Claude版）では、リンクでの共有はできません。次の方法で共有できます。</p>'+
+   '<div class="warn">・<b>PDF</b>や<b>画像</b>に出力して、メールやLINEで送る<br>・ページ右上の「共有」メニューで、見られる人を増やす（Claudeのアカウントが必要です）</div>'+
+   '<div class="row"><button class="btn pri" data-act="pdf">PDFを出力</button><button class="btn" data-act="img">画像を出力</button><button class="btn" id="shx">閉じる</button></div>');
   $('#shx').onclick=shClose;
 }
 function shareDialog(){
@@ -928,14 +1090,17 @@ document.addEventListener('click',function(e){
     [].forEach.call(document.querySelectorAll('.tabs .btn'),function(x){x.setAttribute('aria-selected',x.dataset.p===st.pane)});
     if(st.pane==='view')setTimeout(fit,0);return;
   }
-  if(a==='newplan'){loadPlan(blankPlan());return}
-  if(a==='sample'){loadPlan(samplePlan());return}
+  if(a==='newplan'){guardLeave(function(){loadPlan(blankPlan())});return}
+  if(a==='sample'){guardLeave(function(){loadPlan(samplePlan())});return}
   if(a==='save'){savePlan();return}
   if(a==='del'){deletePlan();return}
   if(a==='pdf'){exportPdf();return}
   if(a==='img'){exportImg();return}
+  if(a==='mode'){st.mode=b.dataset.v==='full'?'full':'easy';try{localStorage.setItem('sm_mode',st.mode)}catch(e){}renderEditor();return}
+  if(a==='estep'){var v=b.dataset.v,nn=easySteps().length;st.step=v==='next'?st.step+1:(v==='prev'?st.step-1:+v);st.step=Math.max(0,Math.min(nn-1,st.step||0));renderEditor();var ed=$('#ed');if(ed)ed.scrollTop=0;try{window.scrollTo(0,0)}catch(e){}return}
+  if(a==='epick'){var ee=p.edges.filter(function(x){return x.id===id})[0];if(ee){ee[b.dataset.f]=b.dataset.v;changed();renderEditor()}return}
   if(a==='ver'){verDialog();return}
-  if(a==='share'){shareDialog();return}
+  if(a==='share'){if(STANDALONE)shareDialog();else shareHelp();return}
   if(a==='nadd'){p.nodes.push({id:uid('n'),tier:b.dataset.t,maker:'',model:'',name:'',price:'',point:'',photo:''})}
   else if(a==='ndel'){p.nodes=p.nodes.filter(function(x){return x.id!==id});p.edges=p.edges.filter(function(x){return x.from!==id&&x.to!==id})}
   else if(a==='nup'){moveIn(p.nodes,id,-1,true)}
@@ -982,9 +1147,13 @@ document.addEventListener('change',function(e){
 });
 $('#plansel').addEventListener('change',function(e){
   var x=plans.filter(function(q){return q.id===e.target.value})[0];
-  if(x)loadPlan(x);
+  if(x)guardLeave(function(){loadPlan(x)},renderBar);
 });
 
+/* ページを離れる前の確認（保存していない変更があるとき） */
+window.addEventListener('beforeunload',function(e){
+  if(st.dirty&&st.touched){e.preventDefault();e.returnValue='保存していない変更があります。';return e.returnValue}
+});
 /* ---------- start ---------- */
 st.cur=samplePlan();
 renderEditor();renderPreview();renderBar();
