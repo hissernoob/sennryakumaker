@@ -162,6 +162,7 @@ summary h2{display:inline}
     <select id="plansel" aria-label="保存した作戦表"></select>
     <button class="btn" data-act="save" id="savebtn">保存</button>
     <button class="btn" data-act="del" id="delbtn">削除</button>
+    <button class="btn" data-act="img" id="imgbtn">画像を出力</button>
     <button class="btn pri" data-act="pdf" id="pdfbtn">PDFを出力</button>
   </div>
   <div class="status" id="status"></div>
@@ -192,7 +193,7 @@ function okHex(h,d){return /^#[0-9a-fA-F]{6}$/.test(h||'')?h:d}
 var TKEYS=['maker','model','price','feat','point','label','hear','talk','head'];
 function tsOf(d){var o={},t=d.t||{};TKEYS.forEach(function(k){var v=t[k]||d.fs||'m';o[k]=(v==='s'||v==='l')?v:'m'});return o}
 function dz(p){var d=(p&&p.design)||{},c=d.c||{};
-  return {t:tsOf(d),num:d.num||'m',photo:d.photo||'m',paper:d.paper==='a3'?'a3':'a4',orient:d.orient||'auto',price:okHex(d.price,'#B0102A'),
+  return {t:tsOf(d),num:d.num||'m',photo:d.photo||'m',paper:d.paper==='a3'?'a3':'a4',orient:d.orient||'auto',res:({std:1,hi:1,max:1})[d.res]?d.res:'hi',price:okHex(d.price,'#B0102A'),
     c:{STD:okHex(c.STD,DEFC.STD),MID:okHex(c.MID,DEFC.MID),FLAG:okHex(c.FLAG,DEFC.FLAG)}}}
 function rgbOf(h){return [parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)]}
 function textOn(h){var c=rgbOf(h).map(function(v){v/=255;return v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4)}),L=.2126*c[0]+.7152*c[1]+.0722*c[2];return L>.4?'#1B2230':'#FFFFFF'}
@@ -202,6 +203,8 @@ var FSM={s:.85,m:1,l:1.2};
 function dzSizes(p){var D=dz(p||st.cur),t={};TKEYS.forEach(function(k){t[k]=FSM[D.t[k]]});
   return {t:t,pb:{s:22,m:28,l:36}[D.num]||28,cn:{s:28,m:36,l:46}[D.num]||36,pw:{s:66,m:88,l:120}[D.photo]||88,ph:{s:46,m:62,l:84}[D.photo]||62}}
 function paperVars(p){var z=dzSizes(p),D=dz(p),v=TKEYS.map(function(k){return '--f-'+k+':'+z.t[k]}).join(';');return v+';--pb:'+z.pb+'px;--cn:'+z.cn+'px;--pw:'+z.pw+'px;--ph:'+z.ph+'px;--pc:'+D.price}
+var RESM={std:2,hi:3,max:4};
+function resHint(r){var m=RESM[r]||3;return '横幅 約'+(1123*m).toLocaleString('ja-JP')+'px（標準=2倍／高精細=3倍／最高=4倍）。ファイルは大きくなります。'}
 function yen(n){return (n===''||n==null||isNaN(Number(n)))?'':'¥'+Number(n).toLocaleString('ja-JP')}
 function clone(o){return JSON.parse(JSON.stringify(o))}
 function nlabel(n){return n.tier+' '+(n.model||n.name||'（未入力）')}
@@ -448,6 +451,7 @@ function designCard(){
    '<div class="wide"><span class="hint">写真の大きさ</span>'+seg('photo',SZ)+'</div>'+
    '<div class="wide"><span class="hint">用紙</span>'+seg('paper',[['a4','A4'],['a3','A3']])+'</div>'+
    '<div class="wide"><span class="hint">用紙の向き</span>'+seg('orient',[['auto','自動'],['land','横'],['port','縦']])+'</div>'+
+   '<div class="wide"><span class="hint">出力の解像度（PDF・画像）。拡大しても文字がつぶれにくいのは「高精細」「最高」です</span>'+seg('res',[['std','標準'],['hi','高精細'],['max','最高']])+'<span class="hint" id="reshint">'+resHint(D.res)+'</span></div>'+
    '<div class="wide"><span class="hint">色</span><div class="swatches">'+sw('STD','STD',D.c.STD,'data-dzc')+sw('MID','MID',D.c.MID,'data-dzc')+sw('FLAG','FLAG',D.c.FLAG,'data-dzc')+sw('price','価格',D.price,'data-dzp')+'</div></div>'+
    '<div class="wide"><span class="hint">色の組み合わせ</span><div class="seg">'+PRESETS.map(function(x,i){return '<button class="btn sm" data-act="preset" data-i="'+i+'">'+x[0]+'</button>'}).join('')+'<button class="btn sm" data-act="dzreset">すべて初期値に戻す</button></div></div>'+
   '</div></details>';
@@ -466,7 +470,7 @@ function renderBar(){
   var o=(!inList?'<option value="'+st.cur.id+'" selected>'+esc(st.cur.title||'新しい作戦表')+'（未保存）</option>':'')+
     list.map(function(x){return '<option value="'+x.id+'"'+(x.id===st.cur.id?' selected':'')+'>'+esc(x.title||'無題')+(x.period?' / '+esc(x.period):'')+'</option>'}).join('');
   sel.innerHTML=o;
-  $('#savebtn').disabled=!canSave();$('#delbtn').disabled=!canSave()||!inList;$('#pdfbtn').disabled=st.busy;
+  $('#savebtn').disabled=!canSave();$('#delbtn').disabled=!canSave()||!inList;$('#pdfbtn').disabled=st.busy;$('#imgbtn').disabled=st.busy;
   var m={ok:['ok','店舗間で共有して保存します'],wait:['warn','共有データに接続中です'],fail:['warn','共有データに接続できません。保存はできない場合があります'],local:['warn','この端末にだけ保存します']}[st.status];
   $('#status').innerHTML='<span class="dot '+m[0]+'"></span>'+m[1]+(st.dirty?' / 未保存の変更があります':'')+
    (st.canWrite===false?' / 閲覧のみ（保存できません）':'')+(st.msg?' / '+esc(st.msg):'')+(st.err?' <span class="err">'+esc(st.err)+'</span>':'');
@@ -492,37 +496,56 @@ function deletePlan(){
 }
 
 /* ---------- PDF ---------- */
-async function exportPdf(){
+var STANDALONE=true;
+async function saveBlob(name,blob){
+  if(dlcap){await dlcap.save({filename:name,data:blob});return}
+  if(!STANDALONE)throw new Error('この表示では保存に対応していません');
+  var an=document.createElement('a');an.href=URL.createObjectURL(blob);an.download=name;document.body.appendChild(an);an.click();an.remove();setTimeout(function(){URL.revokeObjectURL(an.href)},8000);
+}
+function toBlob(cv,type,q){return new Promise(function(ok,ng){cv.toBlob(function(b){b?ok(b):ng(new Error('画像を作れませんでした（解像度を下げてください）'))},type,q)})}
+function fileBase(){return ((st.cur.title||'作戦表')+(st.cur.period?'_'+st.cur.period:'')).replace(/[\\\/:*?"<>|\s]+/g,'_')}
+/* 解像度: 端末の描画上限を超えないよう、必要なときだけ自動で倍率を下げる（iPhone/iPadは約1600万画素、パソコンは約6400万画素まで） */
+function scaleFor(el){var want=RESM[dz(st.cur).res]||3,w=el.offsetWidth,h=el.offsetHeight,ios=/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1),cap=ios?16000000:64000000;
+  return Math.max(1,Math.min(want,Math.sqrt(cap/Math.max(w*h,1)),16000/Math.max(w,h)))}
+async function exportRun(kind){
   if(st.busy)return;
-  if(!window.html2canvas||!window.jspdf){st.err='PDFの部品を読み込めていません。再読み込みしてください。';renderBar();return}
-  st.busy=true;st.err='';st.msg='PDFを作成中…';renderBar();
+  var isPdf=kind==='pdf',label=isPdf?'PDF':'画像';
+  if(!window.html2canvas||(isPdf&&!window.jspdf)){st.err=label+'の部品を読み込めていません。再読み込みしてください。';renderBar();return}
+  if(!dlcap&&!STANDALONE){st.err='この表示では'+label+'の保存に対応していません。';renderBar();return}
+  st.busy=true;st.err='';st.msg=label+'を作成中…（高解像度のため少し時間がかかります）';renderBar();
   try{
     if(document.fonts&&document.fonts.ready)await document.fonts.ready;
-    var pages=pagesHtml(st.cur),holder=$('#holder');
-    var doc=null;
+    var pages=pagesHtml(st.cur),holder=$('#holder'),doc=null,base=fileBase(),D=dz(st.cur),saved=0;
     for(var i=0;i<pages.length;i++){
       holder.innerHTML=pages[i];
-      var cv=await window.html2canvas(holder.firstElementChild,{scale:2,backgroundColor:'#ffffff',useCORS:true,logging:false,windowWidth:1200});
-      var D=dz(st.cur),LW=D.paper==='a3'?1191:842,SW=D.paper==='a3'?842:595;
-      var land=D.orient==='land'?true:(D.orient==='port'?false:Math.min(LW/cv.width,SW/cv.height)>=Math.min(SW/cv.width,LW/cv.height)),ori=land?'landscape':'portrait';
-      if(!doc)doc=new window.jspdf.jsPDF({orientation:ori,unit:'pt',format:D.paper});else doc.addPage(D.paper,ori);
-      var PW=doc.internal.pageSize.getWidth(),PH=doc.internal.pageSize.getHeight();
-      var r=Math.min(PW/cv.width,PH/cv.height),w=cv.width*r,h=cv.height*r;
-      doc.addImage(cv.toDataURL('image/jpeg',0.92),'JPEG',(PW-w)/2,0,w,h);
+      var el=holder.firstElementChild;
+      var cv=await window.html2canvas(el,{scale:scaleFor(el),backgroundColor:'#ffffff',useCORS:true,logging:false,windowWidth:1200});
+      if(isPdf){
+        var LW=D.paper==='a3'?1191:842,SW=D.paper==='a3'?842:595;
+        var land=D.orient==='land'?true:(D.orient==='port'?false:Math.min(LW/cv.width,SW/cv.height)>=Math.min(SW/cv.width,LW/cv.height)),ori=land?'landscape':'portrait';
+        if(!doc)doc=new window.jspdf.jsPDF({orientation:ori,unit:'pt',format:D.paper});else doc.addPage(D.paper,ori);
+        var PW=doc.internal.pageSize.getWidth(),PH=doc.internal.pageSize.getHeight();
+        var r=Math.min(PW/cv.width,PH/cv.height),w=cv.width*r,h=cv.height*r;
+        doc.addImage(cv.toDataURL('image/jpeg',0.95),'JPEG',(PW-w)/2,0,w,h);
+      }else{
+        var blob=await toBlob(cv,'image/png');
+        st.msg='画像を保存中…（'+(i+1)+'/'+pages.length+'）';renderBar();
+        await saveBlob(base+(pages.length>1?'_'+(i+1)+'ページ':'')+'_'+cv.width+'px.png',blob);saved++;
+      }
+      cv.width=cv.height=1;
     }
     holder.innerHTML='';
-    var name=((st.cur.title||'作戦表')+(st.cur.period?'_'+st.cur.period:'')).replace(/[\\\/:*?"<>|\s]+/g,'_')+'.pdf';
-    var blob=doc.output('blob');
-    if(dlcap){await dlcap.save({filename:name,data:blob})}
-    else{var an=document.createElement('a');an.href=URL.createObjectURL(blob);an.download=name;document.body.appendChild(an);an.click();an.remove();setTimeout(function(){URL.revokeObjectURL(an.href)},5000)}
-    st.msg='PDFを保存しました';
+    if(isPdf){await saveBlob(base+'.pdf',doc.output('blob'));st.msg='PDFを保存しました'}
+    else st.msg='画像を保存しました（'+saved+'枚・PNG）';
   }catch(e){
     $('#holder').innerHTML='';
     st.msg='';
-    st.err=(e&&e.code==='declined')?'PDFの保存を取りやめました。':'PDFを作れませんでした。'+(e&&e.message?'（'+e.message+'）':'');
+    st.err=(e&&e.code==='declined')?label+'の保存を取りやめました。':label+'を作れませんでした。'+(e&&e.message?'（'+e.message+'）':'');
   }
   st.busy=false;renderBar();
 }
+function exportPdf(){return exportRun('pdf')}
+function exportImg(){return exportRun('img')}
 
 /* ---------- events ---------- */
 function moveIn(arr,id,dir,same){
@@ -565,6 +588,7 @@ document.addEventListener('click',function(e){
   if(a==='save'){savePlan();return}
   if(a==='del'){deletePlan();return}
   if(a==='pdf'){exportPdf();return}
+  if(a==='img'){exportImg();return}
   if(a==='nadd'){p.nodes.push({id:uid('n'),tier:b.dataset.t,maker:'',model:'',name:'',price:'',point:'',photo:''})}
   else if(a==='ndel'){p.nodes=p.nodes.filter(function(x){return x.id!==id});p.edges=p.edges.filter(function(x){return x.from!==id&&x.to!==id})}
   else if(a==='nup'){moveIn(p.nodes,id,-1,true)}
